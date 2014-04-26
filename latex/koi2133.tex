@@ -22,27 +22,25 @@
 
 
 \begin{abstract}
-Kepler-91b was detected using data from the Kepler spacecraft and its planetary nature was confirmed through analysis of the light curve. Recently these data have been reanalyzed and questions have been raised as to whether a planet actually orbits Kepler-91. We simultaneous modeled the Kepler data and ground-based radial velocity observations from the Hobby-Eberly Telescope and find that Kepler-91b is unambiguously a planet orbiting a red giant host star. The star exhibits temporally correlated noise which we model as a Gaussian process. It is this noise component that we hypothesize led previous studies to erroneous conclusions. This work validates the conclusions presented the discovery paper that Kepler-91b is a 0.75 M$_{\textrm{Jup}}$ planet. 
+Kepler-91b was detected using data from the Kepler spacecraft and its planetary nature was confirmed through analysis of the light curve. Recently these data have been reanalyzed and questions have been raised as to whether a planet actually orbits Kepler-91. We simultaneous modeled the Kepler data and ground-based radial velocity observations from the Hobby-Eberly Telescope and find that Kepler-91b is unambiguously a planet orbiting a red giant host star. The star exhibits temporally correlated noise which we model as a Gaussian process. It is this noise component that we hypothesize led previous studies to suspect Kepler-91b as a false positive. This work validates the conclusions presented the discovery paper that Kepler-91b is a $0.72\pm0.12$ M$_{\textrm{Jup}}$ planet. 
 \end{abstract}
 
 \section{Introduction}
 The first discovered exoplanets were Jupiter-sized \citep{campbell88} and most orbited just a few stellar radii from their host stars \citep{mayor95,marcy96}. This was a milestone moment that unambiguously demonstrated that planetary systems need not resemble our own. While data from the Kepler spacecraft has revealed planetary systems come in many flavors \citep[e.g.][]{lissauer11,carter12,barclay13}, hot Jupiter's remain a key area of interest because the large size of these planet and their short orbital periods yield the highest signal to noise light curve data with which otherwise undetectable effects can be observed. Examples of this include the detection of in-homogenous clouds \citep{demory13} and the determination of planet masses from Doppler boosting \citep{shporer11,barclay12}.
 
-Kepler-91 was given the designation in the Kepler Input Catalog (KIC) 8219268 \citep{brown11}. The star was observed for the entire four year duration of the Kepler mission in long cadence mode. It was shown to display solar-like oscillations from which stellar mass of 1.3 $M_\odot$ and radius of 6.3 $R_\odot$ was derived, indicating this is a K-type giant with a density of 0.0073 g cc$^{-3}$ \citep{huber13,lillo13}.
+Kepler-91 was given the designation in the Kepler Input Catalog (KIC) 8219268 \citep{brown11}. The star was observed for the entire four year duration of the Kepler mission in long cadence mode. It was shown to display solar-like oscillations from which stellar mass of 1.3 $M_\odot$ and radius of 6.3 $R_\odot$ was derived, indicating this is a K-type giant with a density of 0.0073 g cc$^{-3}$ \citep{huber13,lillo14}.
 
-A transiting planet candidate with an orbital period of 6.3 days was detected by the Kepler team and assigned Kepler Object of Interest (KOI) number 2133.01 \citep{batalha12}. \citet{lillo13} confirmed the planetary nature of the apparently transiting body. However, the status of this planet has recently been called into question by both \citet{esteves13}, who use phase variations to deduce that the occulting body is self-luminous, and \citet{sliski14} who find that the stellar density derived from a transit model differs significantly from the density calculated using asteroseismic techniques. In this paper we present the results of a light curve model combined with radial velocity observations obtained from the ground and find that the transit-signal is unambiguously caused by a Jupiter-sized planet orbiting the red giant target star.
+A transiting planet candidate with an orbital period of 6.3 days was detected by the Kepler team and assigned Kepler Object of Interest (KOI) number 2133.01 \citep{batalha12}. \citet{lillo14} confirmed the planetary nature of the apparently transiting body. However, the status of this planet has recently been called into question by both \citet{esteves13}, who use phase variations to deduce that the occulting body is self-luminous, and \citet{sliski14} who find that the stellar density derived from a transit model differs significantly from the density calculated using asteroseismic techniques. In this paper we present the results of a light curve model combined with radial velocity observations obtained from the ground and find that the transit-signal is unambiguously caused by a Jupiter-sized planet orbiting the red giant target star.
 
 
 \section{Observational data used in this study}
 
 \subsection{Stellar properties}
-Solar-like oscillations were detected in the Kepler time series data of Kepler-91 \citep{huber13}. By combining these observations with a temperature and metallicity derived from optical spectroscopy, it was determined that Kepler-91b was unambiguously a giant star. \citet{lillo13} performed a more detailed asteroseismic analysis by fitting individual frequencies. The stellar properties adopted in this paper from \citeauthor{lillo13} are reported in Table~\ref{tab:stellar}.
-
-\textbf{Do we want to a better job here at modeling the oscillations? We can bring someone else on board if need be... Tim White?}
+Solar-like oscillations were detected in the Kepler time series data of Kepler-91 \citep{huber13}. By combining these observations with a temperature and metallicity derived from optical spectroscopy, it was determined that Kepler-91b was unambiguously a giant star. \citet{lillo14} performed a more detailed asteroseismic analysis by fitting individual frequencies. The stellar properties adopted in this paper from \citeauthor{lillo14} are reported in Table~\ref{tab:stellar}.
 
 \begin{table}
 \centering
-\caption{Stellar properties adopted from \citet{lillo13}}\label{tab:stellar}
+\caption{Stellar properties adopted from \citet{lillo14}}\label{tab:stellar}
 \begin{tabular}{l l }
 Property & Adopted value \\
 \hline
@@ -107,18 +105,19 @@ Time & Velocity\footnote{the values presented here have had an arbitrary offset 
 \section{Simultaneous modeling of Kepler and RV data}
 To provide a self-consistent model of both the light curve and the radial velocity observations we chose to model both datasets simultaneously using the orbital model described in \citet{rowe14}.
 
-Significant planet-induced variability outside of the transit of Kepler-91b has been noted in previous work \citep{lillo13,esteves13}. We chose to model these light curve variations rather than remove them via filtering.  We include 5 physical components in our model of the light curve: a transit, an occultation, ellipsoidal modulation, Doppler boosting and reflection from the planet. We additionally include the radial velocity data as an additional component in the model and finally we include a model for the correlated noise.
+Significant planet-induced variability outside of the transit of Kepler-91b has been noted in previous work \citep{lillo14,esteves13}. We chose to model these light curve variations rather than remove them via filtering.  We include 5 physical components in our model of the light curve: a transit, an occultation, ellipsoidal modulation, Doppler boosting and reflection from the planet. We additionally include the radial velocity data as an additional component in the model and finally we include a model for the correlated noise.
 
-We used a limb darkened transit model \citep{mandel02} following a quadratic limb darkening law, and a uniform disk model for the occultation. The ellipsoidal variations, Doppler boosting and reflection were modeled in the manner described by \citet{lillo13}, but we parameterized the Doppler beaming in terms of $K$, the radial velocity semi-amplitude, to retain a consistent solution between the light curve data and the spectroscopic radial velocities. We parameterized the combined model in terms of $\rho$ the mean stellar density, $zp$ a photometric zero point nuisance parameter, linear ($\gamma_1$) and quadratic ($\gamma_2$) limb darkening coefficients, $T_0$ the mid-point of transit, $P$ the orbital period of the planet, $b$ the impact parameter, $R_{p}/R_{\star}$ the planet-to-star radius ratio, eccentricity vectors $e\cos{\omega}$ and $e\sin{\omega}$ where $e$ is eccentricity and $\omega$ is the argument of periastron, the amplitude of the ellipsoid variations $A_e$, the amplitude of the refection from the planet $A_r$, the occultation depth $F_e$, radial velocity semi-amplitude $K$, and $V$ a radial velocity zero-point.
+We used a limb darkened transit model \citep{mandel02} following a quadratic limb darkening law, and a uniform disk model for the occultation. The ellipsoidal variations, Doppler boosting and reflection were modeled in the manner described by \citet{lillo14}, but we parameterized the Doppler beaming in terms of $K$, the radial velocity semi-amplitude, to retain a consistent solution between the light curve data and the spectroscopic radial velocities. We parameterized the combined model in terms of $\rho$ the mean stellar density, $zp$ a photometric zero point nuisance parameter, linear ($\gamma_1$) and quadratic ($\gamma_2$) limb darkening coefficients, $T_0$ the mid-point of transit, $P$ the orbital period of the planet, $b$ the impact parameter, $R_{p}/R_{\star}$ the planet-to-star radius ratio, eccentricity vectors $e\cos{\omega}$ and $e\sin{\omega}$ where $e$ is eccentricity and $\omega$ is the argument of periastron, the amplitude of the ellipsoid variations $A_e$, the amplitude of the refection from the planet $A_r$, the occultation depth $F_e$, radial velocity semi-amplitude $K$, and $V$ a radial velocity zero-point.
 
 Because we are using disparate data sets is it useful to include a parameter for both the light curve and radial velocity data that is an additional noise term which is added in quadrature with the formal uncertainty ($\sigma_{lc}$ and $\sigma_{rv}$). These account for missing physics on our model in addition to dealing with underestimation of the reported uncertainties. This creates a flexible model that enables us to scale the two data sets appropriately. 
 
-\textbf{Maybe here for the section on the GP noise model. This needs to be given prominence in this paper because its novel.}
-
+%\textbf{Maybe here for the section on the GP noise model. This needs to be given prominence in this paper because its novel.}
+\section{Gaussian Process noise model}
 After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation (cite) to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}. \citet{huber13b} have shown this type of noise is \emph{can} be modeled by a two component (pink) noise model: a white Gaussian noise and a red noise component. 
 
 We opted to model the noise using squared exponential Gaussian Process... \textbf{Dan FM to write GP section. I've called the GP components $A_{GP}$ and $l_{GP}$, lets think of better symbols for these.}
 
+cite this guy: \citet{ambikasaran14}
 
 %However, we opted to model the noise as three sources in the frequency domain, a flat white noise component, a half-Lorentzian centered at zero frequency, and a Gaussian at the frequency of the solar-like oscillations. At each realization of the light curve model we fit a noise model to the power spectra density of the residuals when the light curve model has been subtracted from the observed flux. There are six free parameters in the noise model; a white noise background, an amplitude and width of the half-Lorentzian and the mean, standard deviation and amplitude of a Gaussian. The noise model is built upon an adaptive Wiener filter \citep{wiener49,astroML,astroMLText}. The fit performed using a bounded limited-memory Broyden-Fletcher-Goldfarb-Shanno optimization \citep{zhu97} implemented in Scipy \citep{scipy}. We opted to use a bounded optimization to keep the mean of the Gaussian component in the region of frequency space where we have prior knowledge of solar-like oscillations. The noise model is then convolved with the power spectral density of the light curve model subtracted flux and this is then transformed back into the time domain. The log-likelihood of the realization is calculated assuming a Gaussian of residuals after the noise model is subtracted from the flux.
 
@@ -144,14 +143,14 @@ Property & Prior \\
 \hline
 $\rho$		&	$N(0.0073;0.0001)$ \\
 $zp$				& 	$U(-\infty;+\infty)$\\
-$\gamma_1$		&	$N(X;0.1)$ \\
-$\gamma_2$		&	$N(X;0.1)$\\
+$\gamma_1$		&	$N(0.67;0.6)$ \\
+$\gamma_2$		&	$N(0.09;0.6)$\\
 $T_0$ & $U(-\infty;+\infty)$\\
 $P$ & $U(-\infty;+\infty)$\\
 $b$ & $U(0;1+R_{p}/R_{\star})$\\
 $R_{p}/R_{\star}$ & $U(0;1)$ \\
-$e\cos{\omega}$ &$U(-2\pi;2\pi)$ \\
-$e\cos{\omega}$ & $U(-2\pi;2\pi)$\\
+$e\cos{\omega}$ &$U(-1;1)$ \\
+$e\cos{\omega}$ & $U(-1;1)$\\
 $A_e$ &$U(-\infty;+\infty)$ \\
 $A_r$ & $U(-\infty;+\infty)$\\
 $F_e$ & $U(-\infty;+\infty)$\\
@@ -165,9 +164,9 @@ $l_{GP}$ &  $U(0;+\infty)$ \\
 \end{tabular}
 \end{table}
 
-We numerically integrated the posterior probability using an efficient affine invariant Markov-Chain Monte Carlo (MCMC) algorithm \citep{goodman10,foreman12}.  This method utilizes many walkers to reduce autocorrelation time; we opted to use 700 walkers each taking 15,000 steps for a total of $10.5\times10^6$ samples of the posterior probability. However, we toss the first 5,000 samples in each walker as burn-in which leaves $7\times10^6$ samples use to calculate posterior distributions.
+We numerically integrated the posterior probability using an efficient affine invariant Markov-Chain Monte Carlo (MCMC) algorithm \citep{goodman10,foreman13}.  This method utilizes many walkers to reduce autocorrelation time; we opted to use 700 walkers each taking 15,000 steps for a total of $10.5\times10^6$ samples of the posterior probability. However, we toss the first 5,000 samples in each walker as burn-in which leaves $7\times10^6$ samples use to calculate posterior distributions.
 
-In Figure~\ref{fig:noise model} we show two transits in Kepler data, the noise model, light curve model and the combined light curve and noise model. The noise model does a good job of matching red noise component of the noise.
+In Figure~\ref{fig:noise model} we show two transits in Kepler data, the mean noise model, light curve model and the combined light curve and noise model. The noise model does a good job of matching red noise component of the noise.
 
 \begin{figure}
 \includegraphics[width=0.50\textwidth]{noisemodel.png}
@@ -177,7 +176,7 @@ In Figure~\ref{fig:noise model} we show two transits in Kepler data, the noise m
 
 
 \section{Results}
-We were able to produce a self consistent model that well described the data. Parameters from the modeling are reported in Table~\ref{tab:results}, we give the median and central 68\% and 95\% bounds of the marginalized posterior distribution for each parameter. Our values are largely consistent with \citet{lillo13}, in particular we obtain a similar $R_{p}/R_{\star}$, a probability distribution that is inconsistent with that found by \citet{sliski14}
+We were able to produce a self consistent model that well described the data. Parameters from the modeling are reported in Table~\ref{tab:results}, we give the median and central 68\% bounds of the marginalized posterior distribution for each parameter. In addition we provide the most probably model where parameters are self consistent. Our values are largely consistent with \citet{lillo14}, in particular we obtain a similar $R_{p}/R_{\star}$, a probability distribution that is inconsistent with that found by \citet{sliski14}.
 
 We derive a planet mass of 0.75 M$_{\textrm{Jup}}$ which, combined with a planet radius of XX yields a density of XX implying that Kepler-91b is somewhat inflated. 
 
@@ -217,11 +216,20 @@ $K$ 	(m/s)		&72	& 67&{+10}&$-$10 \\
 $\sigma_{lc}$ (ppm)	&0.6	& 1.3&{+1.4}&$-$0.9  \\
 $\sigma_{rv}$ (m/s)	&	8.9& 9.0&{+8.2}&$-$6.2\\
 $A_{GP}$ &0.000300& 0.000301 & {+0.000020}&$-$0.0000020 \\ 
-$l_{GP}$  &0.03729& 0.03120&{+0.00030}&$-$0.00030 \\
+$l_{GP}$  &0.03729& 0.03712&{+0.00030}&$-$0.00030 \\
+\hline
+$R_{p}$ ($R_{J}$) & 1.294 & 1.328 & +0.076 & $-$0.062 \\
+$M_{p}$ ($M_{J}$) & 0.78 & 0.72 & +0.12 & $-$0.11 \\
+$a/R_{\star}$ &2.469 & 2.469 & +0.011 & $-$0.011 \\
+$A_g$ & 0.37 & 0.46 & +0.18 & $-$0.17 \\
+$e$ & 0.0311 & 0.032 & +0.021 & $-$0.013 \\
+$i$ (deg)& 70.02 &  69.95 & +0.39 & $-$0.38 \\
+$\rho_{p}$ (g/cc) & 0.478 & 0.405 & +0.092 & $-$0.084\\
 \hline
 \end{tabular}
 \end{table}
 
+The 
 
 \section{Discussion}
 We obtained good fits to both the radial velocity and light curve data with our model. The radial velocity observations phase well with the orbital period defined by the transit and therefore almost certainly are caused by a reflex motion of the star that the planet orbits. The transit model fits the data well with low eccentricity. If the density constraint from asterseismlogy were to be bad prior we would need a model with high eccentricity, which is not seen. The mass we derive is consistent with a planetary body. We therefore conclude Kepler-91b is unambiguously a planet.
@@ -232,15 +240,15 @@ A_g = F_e \left(\frac{a}{R_p}\right)^{2} = F_e \left(\frac{a}{R_{\star}}\frac{R_
 \end{equation}
 Therefore, underestimating $R_{p}/R_{\star}$ will overestimate the albedo $A_g$. We caution that it is only because we were in possession of the radial velocity data, which raised doubts on the interpretation of Esteves, that we considered the more sophisticated noise model described here. We suggest that extreme caution should be used in deriving planet parameters where the host star is noisy on timescales comparable to the transit duration.
 
-\citet{sliski14} only include data less than three transit durations from a transit and fit a standard transit model ignoring the out-of-transit ellipsoidal variations. They find that the mean stellar density derived purely from a transit model is not consistent with the asteroseismic density of the star. We suspect that \citeauthor{sliski14} find an erroneously high stellar density because they neglected to include phase variations, particularly the high amplitude ellipsoidal variations found in the work of \citet{lillo13}. The density parameter is sensitive to the duration of the transit, we hypothesize that not including out-of-transit variations caused an underestimate of the transit duration. This theory is strengthened because they report a significantly smaller planet-to-star radius ratio than we find. We caution against using just a short amount of data on either side of the transit as correctly estimating the out-of-transit flux level is essential to estimating the planet properties.
+\citet{sliski14} only include data less than three transit durations from a transit and fit a standard transit model ignoring the out-of-transit ellipsoidal variations. They find that the mean stellar density derived purely from a transit model is not consistent with the asteroseismic density of the star. We suspect that \citeauthor{sliski14} find an erroneously high stellar density because they neglected to include phase variations, particularly the high amplitude ellipsoidal variations found in the work of \citet{lillo14}. The density parameter is sensitive to the duration of the transit, we hypothesize that not including out-of-transit variations caused an underestimate of the transit duration. This theory is strengthened because they report a significantly smaller planet-to-star radius ratio than we find. We caution against using just a short amount of data on either side of the transit as correctly estimating the out-of-transit flux level is essential to estimating the planet properties.
 
 
 
 \section{Conclusions}
-We combined Kepler data presented in previous studies of Kepler-91 with radial velocity data obtained from the Hobby-Eberly Telescope. We find that these data can be fit in a self consistent manner and the results lead us to conclude that Kepler-91b is a planet, validating the work of Lillo-Box et al (2013). We hypothesize that recent work claiming this as a false positive erred owing to the challenge of modeling a star with a strong correlated noise component and relatively high amplitude out-of-transit variations. 
+We combined Kepler data presented in previous studies of Kepler-91 with radial velocity data obtained from the Hobby-Eberly Telescope. We find that these data can be fit in a self consistent manner and the results lead us to conclude that Kepler-91b is a planet, validating the work of \citet{lillo14}. We hypothesize that recent work claiming this as a false positive erred owing to the challenge of modeling a star with a strong correlated noise component and relatively high amplitude out-of-transit variations. 
 
 \acknowledgments
-This paper includes data collected by the Kepler mission. Funding for the Kepler mission is provided by the NASA Science Mission Directorate. Some Kepler data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST) at the Space Telescope Science Institute (STScI). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555. Support for MAST for non-HST data is provided by the NASA Office of Space Science via grant NNX09AF08G and by other grants and contracts. Our MCMC simulations were performed on the Pleiades supercomputer of the NASA Advanced Supercomputing Division at NASA's Ames Research Center. We used data obtained from The Hobby-Eberly Telescope (HET), a joint project of the University of Texas at Austin, the Pennsylvania State University, Stanford University, Ludwig-Maximilians-Universit\"{a}t M\"{u}nchen, and Georg-August-Universit\"{a}t G\"{o}ttingen. The HET is named in honor of its principal benefactors, William P. Hobby and Robert E. Eberly. We thank Ruth Angus for valuable discussions on noise sources in RV observations. E.V. is supported by a NASA Senior Fellowship at the Ames Research Center, administered by Oak Ridge Associated Universities through a contract with NASA. D.H. acknowledges support by the Kepler Participating Scientist Program. 
+This paper includes data collected by the Kepler mission. Funding for the Kepler mission is provided by the NASA Science Mission Directorate. Some Kepler data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST) at the Space Telescope Science Institute (STScI). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555. Support for MAST for non-HST data is provided by the NASA Office of Space Science via grant NNX09AF08G and by other grants and contracts. Our MCMC simulations were performed on the Pleiades supercomputer of the NASA Advanced Supercomputing Division at NASA's Ames Research Center. We used data obtained from The Hobby-Eberly Telescope (HET), a joint project of the University of Texas at Austin, the Pennsylvania State University, Stanford University, Ludwig-Maximilians-Universit\"{a}t M\"{u}nchen, and Georg-August-Universit\"{a}t G\"{o}ttingen. The HET is named in honor of its principal benefactors, William P. Hobby and Robert E. Eberly. We thank Ruth Angus for valuable discussions on noise sources in RV observations. E.V.Q. is supported by a NASA Senior Fellowship at the Ames Research Center, administered by Oak Ridge Associated Universities through a contract with NASA. D.H. acknowledges support by the Kepler Participating Scientist Program. 
 
 
 

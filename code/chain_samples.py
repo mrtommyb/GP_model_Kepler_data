@@ -18,29 +18,29 @@ from scipy import optimize
 
 import h5py
 
-def get_sample(chain_vals):
+def get_sample(chain_vals,time,flux,ferr,rvtime):
     M = LCModel()
-    M.add_star(rho=mle[0],zpt=mle[1],ld1=mle[2],
-        ld2=mle[3],veloffset=mle[4])
-    M.add_planet(T0=mle[7],period=mle[8],impact=mle[9],
-        rprs=mle[10],ecosw=mle[11],esinw=mle[12],
-        rvamp=mle[13],occ=mle[14],ell=mle[15],alb=mle[16])
-    M.add_data(time=f['time'][:])
-    M.add_rv(rvtime=f['rvtime'])
+    M.add_star(rho=chain_vals[0],zpt=chain_vals[1],ld1=chain_vals[2],
+        ld2=chain_vals[3],veloffset=chain_vals[4])
+    M.add_planet(T0=chain_vals[7],period=chain_vals[8],impact=chain_vals[9],
+        rprs=chain_vals[10],ecosw=chain_vals[11],esinw=chain_vals[12],
+        rvamp=chain_vals[13],occ=chain_vals[14],ell=chain_vals[15],alb=chain_vals[16])
+    M.add_data(time=time)
+    M.add_rv(rvtime=rvtime)
 
-    #kernel = ((mle[5]**2 * RBFKernel(mle[6])) +
-    #        (mle[7]**2 * RBFKernel(mle[8])))
-    #kernel = ((mle[5]**2 * ExpKernel(mle[6])) +
-    #        (mle[7]**2 * RBFKernel(mle[8])))
-    kernel = mle[5]**2 * RBFKernel(mle[6])
+    #kernel = ((chain_vals[5]**2 * RBFKernel(chain_vals[6])) +
+    #        (chain_vals[7]**2 * RBFKernel(chain_vals[8])))
+    #kernel = ((chain_vals[5]**2 * ExpKernel(chain_vals[6])) +
+    #        (chain_vals[7]**2 * RBFKernel(chain_vals[8])))
+    kernel = chain_vals[5]**2 * RBFKernel(chain_vals[6])
     gp = george.GaussianProcess(kernel)
 
     sample = np.array([])
-    for i in np.arange(len(f['time'][:]) // 1000):
+    for i in np.arange(len(time) // 1000):
         section = np.arange(i*1000,i*1000 + 1000)
-        gp.compute(f['time'][:][section], f['err'][:][section])
+        gp.compute(time[section], ferr[:][section])
         sample = np.r_[sample,gp.predict(
-            f['flux'][:][section] - M.transitmodel[section],f['time'][:][section])[0]]
+            flux[:][section] - M.transitmodel[section],time[section])[0]]
     return sample, M.transitmodel
 
 
@@ -55,7 +55,32 @@ if __name__ == '__main__':
 
     mle = g[mle_idx]
 
-    sample, tmod = get_sample(mle)
+    time = f['time'][:]
+    flux = f['flux'][:]
+    ferr = f['err'][:]
+    rvtime = f['rvtime']
+
+    sample, tmod = get_sample(mle,time,flux,ferr,rvtime)
+
+    doplot = False
+    if doplot:
+        time = f['time'][:61000]
+        flux = f['flux'][:61000]
+        tmod1 = tmod[:61000]
+
+        fig, (ax1) = plt.subplots(1, 1, sharex=True, sharey=False,
+            figsize=[9,6])
+        ax1.scatter(time,flux,s=1,label='Kepler data')
+        ax1.plot(time,sample,color='b',label='Noise model')
+        ax1.plot(time,tmod1,color='r',
+            label='Light curve model')
+        ax1.plot(time,sample+tmod1,color='purple',
+            label='Light curve + noise model',lw=2)
+        ax1.set_xlim([583.8,596.9])
+        ax1.legend()
+        ax1.set_xlabel('Time (BJD-2454833)',labelpad=12)
+        ax1.set_ylabel('Relative flux')
+        ax1.minorticks_on()
 
 
 
