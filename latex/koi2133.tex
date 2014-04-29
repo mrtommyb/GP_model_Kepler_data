@@ -15,10 +15,12 @@
 %\title{Radial velocity confirmation of a transiting 0.75 jupiter-mass planet orbiting the red giant star Kepler-91}
 %\title{Confirmation of Kepler-91\lowercase{b} as a giant low-density planet orbiting a giant low-density star}
 %\title{Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star: an analysis utilizing radial velocity observations and Gaussian Process light curve noise modeling}
-\title{Radial velocity observations and light curve noise modeling reveal Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star}
+%\title{Radial velocity observations and light curve noise modeling reveal Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star}
+\title{Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star}
+% I kinda want to mention RV and GP in the title
 \author{Thomas Barclay$^{1,2}$, Michael Endl$^{3}$, Daniel Huber$^{1,4}$,  Daniel Foreman-Mackey$^{5}$, William D. Cochran$^{3}$, Phillip J. MacQueen$^{3}$ and Elisa V. Quintana$^{1,4}$}
 
-\slugcomment{To be submitted}
+\slugcomment{To be submitted to a journal (ApJ? maybe MNRAS.)}
 
 \altaffiltext{1}{NASA Ames Research Center, M/S 244-30, Moffett Field, CA 94035, USA}
 \altaffiltext{2}{Bay Area Environmental Research Institute, 596 1st Street West, Sonoma, CA 95476, USA}
@@ -126,7 +128,7 @@ We parameterized the combined model in terms of $\rho$ the mean stellar density,
 
 Because we are using disparate data sets is it useful to include a parameter for both the light curve and radial velocity data that is an additional noise term which is added in quadrature with the formal uncertainty ($\sigma_{lc}$ and $\sigma_{rv}$). These account for missing physics on our model in addition to dealing with underestimation of the reported uncertainties. This creates a flexible model that enables us to scale the two data sets appropriately. 
 
-%\textbf{Maybe here for the section on the GP noise model. This needs to be given prominence in this paper because its novel.}
+%\textbf{Maybe here for the section on the GP noise model. This needs to be given prominence in this paper because it's novel.}
 \subsection{Gaussian Process noise model}
 After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation (cite) to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}. \citet{huber13b} have shown this type of noise is \emph{can} be modeled by a two component (pink) noise model: a white Gaussian noise and a red noise component. 
 

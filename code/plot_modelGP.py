@@ -92,15 +92,15 @@ def plot_transit_best(hf,ax,ylim=[9000,-1000],bins=900):
         M.add_data(time=f['time'][:])
         M.add_rv(rvtime=f['rvtime'][:])
 
-        resid = f['flux'][:] - M.transitmodel
-        sample = get_sample(
-            mle[5],mle[6],M.time,resid,f['err'][:])
-        len_samp = len(sample)
-        phi,ffold,fmod = get_qf(M.time[:len_samp],
-            f['flux'][:len_samp] - sample,
+        #resid = f['flux'][:] - M.transitmodel
+        #sample = get_sample(
+        #    mle[5],mle[6],M.time,resid,f['err'][:])
+        #len_samp = len(sample)
+        phi,ffold,fmod = get_qf(M.time,
+            f['flux'][:],
             M.T0,
             M.period,
-            transitmodel=M.transitmodel[:len_samp])
+            transitmodel=M.transitmodel)
 
         ax.scatter(np.r_[phi,phi+M.period],
             np.r_[ffold,ffold],color='k',alpha=0.05,s=0.5)
@@ -243,12 +243,12 @@ plt.rcParams.update(params)
 if __name__ == '__main__':
     hf = 'koi2133_np1_priorTrue_dil0.0GP.hdf5'
     fig, axes = plt.subplots(2, 1, figsize=[6,9])
-    #ax1 = plot_transit_best(hf,axes[0],ylim=[2000,-1500])
-    ax1 = plot_transit_best(hf,axes[0],ylim=[1100,-600])
+    ax1 = plot_transit_best(hf,axes[0],ylim=[2000,-1500])
+    #ax1 = plot_transit_best(hf,axes[0],ylim=[1100,-600])
     ax2 = plot_rv_best(hf,axes[1],ylim=[-220,220])
     plt.tight_layout()
     plt.savefig(
-        '/Users/tom/Projects/koi2133/data/{0}X.png'.format(
+        '/Users/tom/Projects/koi2133/data/{0}.png'.format(
             hf[0:7].strip('.0').strip('.')))
 
 
