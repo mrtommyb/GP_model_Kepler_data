@@ -3,6 +3,8 @@ import sys
 import ktransit
 import h5py
 import matplotlib.pyplot as plt
+import george
+from george.kernels import RBFKernel
 
 def bin_data(phi,flux,bins,model=None):
     phi = np.array(phi)
@@ -45,6 +47,33 @@ def get_qf_rv(time,flux,err,epoch,period,rvmodel=None):
     else:
         return q1,f1,e1
 
+def get_many_samples(gp1,gp2,time,resid,ferr,nsamples=300):
+    kernel = gp1**2 * RBFKernel(gp2)
+    gp = george.GaussianProcess(kernel)
+
+    slist = np.arange(len(time) // 1000)
+    samples = np.zeros([nsamples,len(slist)*1000])
+    for i in slist:
+        section = np.arange(i*1000,i*1000 + 1000)
+        gp.compute(time[section], ferr[:][section])
+        samples[:,section] = gp.sample_conditional(
+            resid[section],time[section],
+            size=nsamples)
+    return samples
+
+def get_sample(gp1,gp2,time,resid,ferr):
+    kernel = gp1**2 * RBFKernel(gp2)
+    gp = george.GaussianProcess(kernel)
+
+    slist = np.arange(len(time) // 1000)
+    sample = np.zeros(len(slist)*1000)
+    for i in slist:
+        section = np.arange(i*1000,i*1000 + 1000)
+        gp.compute(time[section], ferr[:][section])
+        sample[section] = gp.predict(
+            resid[section],time[section])[0]
+    return sample
+
 
 def plot_transit_best(hf,ax,ylim=[9000,-1000],bins=900):
     with h5py.File(hf) as f:
@@ -62,8 +91,17 @@ def plot_transit_best(hf,ax,ylim=[9000,-1000],bins=900):
             occ=mle[14],ell=mle[15],alb=mle[16])
         M.add_data(time=f['time'][:])
         M.add_rv(rvtime=f['rvtime'][:])
-        phi,ffold,fmod = get_qf(M.time,f['flux'][:],
-            M.T0,M.period,transitmodel=M.transitmodel)
+
+        resid = f['flux'][:] - M.transitmodel
+        sample = get_sample(
+            mle[5],mle[6],M.time,resid,f['err'][:])
+        len_samp = len(sample)
+        phi,ffold,fmod = get_qf(M.time[:len_samp],
+            f['flux'][:len_samp] - sample,
+            M.T0,
+            M.period,
+            transitmodel=M.transitmodel[:len_samp])
+
         ax.scatter(np.r_[phi,phi+M.period],
             np.r_[ffold,ffold],color='k',alpha=0.05,s=0.5)
         ax.plot(np.r_[phi,phi+M.period],
@@ -205,11 +243,12 @@ plt.rcParams.update(params)
 if __name__ == '__main__':
     hf = 'koi2133_np1_priorTrue_dil0.0GP.hdf5'
     fig, axes = plt.subplots(2, 1, figsize=[6,9])
-    ax1 = plot_transit_best(hf,axes[0],ylim=[2000,-1500])
+    #ax1 = plot_transit_best(hf,axes[0],ylim=[2000,-1500])
+    ax1 = plot_transit_best(hf,axes[0],ylim=[1100,-600])
     ax2 = plot_rv_best(hf,axes[1],ylim=[-220,220])
     plt.tight_layout()
     plt.savefig(
-        '/Users/tom/Projects/koi2133/data/{0}.png'.format(
+        '/Users/tom/Projects/koi2133/data/{0}X.png'.format(
             hf[0:7].strip('.0').strip('.')))
 
 
