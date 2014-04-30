@@ -130,7 +130,9 @@ Because we are using disparate data sets is it useful to include a parameter for
 
 %\textbf{Maybe here for the section on the GP noise model. This needs to be given prominence in this paper because it's novel.}
 \subsection{Gaussian Process noise model}
-After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation (cite) to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}. \citet{huber13b} have shown this type of noise is \emph{can} be modeled by a two component (pink) noise model: a white Gaussian noise and a red noise component. 
+After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation \citep{mathur11} to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}. \citet{huber13b} have shown this type of noise is \emph{can} be modeled by a two component (pink) noise model: a white Gaussian noise and a red noise component. 
+
+The probability of the model given the data is proportional to the likelihood of the data given the model multiplied by our priors. The likelihood function we use assumes Gaussian residuals 
 
 We opted to model the noise using squared exponential Gaussian Process... \textbf{Dan FM to write GP section. I've called the GP components $A_{GP}$ and $l_{GP}$, lets think of better symbols for these.}
 is the lag in days$^2$?
@@ -196,7 +198,7 @@ In Figure~\ref{fig:noise model} we show two transits in Kepler data, the mean no
 \section{Results}
 We were able to produce a self consistent model that well described the data. Parameters from the modeling are reported in Table~\ref{tab:results}, we give the median and central 68\% bounds of the marginalized posterior distribution for each parameter. In addition we state the most probably model we sampled which provides a self consistent set of parameters. Our parameter estimates are largely consistent with \citet{lillo14}. While we obtain a slightly lower estimate for $R_{p}/R_{\star}$, we are still consistent with \citet{lillo14} at the level of $<$1.5$\sigma$. Our estimate of $R_{p}/R_{\star}$ is inconsistent with that found by \citet{sliski14}.
 
-We derive a planet mass of $0.73\pm 13$ M$_{Jup}$ which, combined with a planet radius of $1.308^{+0.061}_{-0.074}$ $R_{Jup}$ yields a density of $0.40{+0.10}_{-0.09}$ g cm$^{3}$ implying that Kepler-91b is somewhat inflated. Specifically, we highlight the consistency between the planet mass we obtain with radial velocity observations and the mass\citet{lillo14} obtains from the phase curve alone. Kepler-91b is one of a growing number of examples showing that hot Jupiter densities can be estimated from Kepler data alone \citep{welsh10,barclay12,quintana13}.
+We derive a planet mass of $0.73\pm 13$ M$_{Jup}$ which, combined with a planet radius of $1.308^{+0.061}_{-0.074}$ $R_{Jup}$ yields a density of $0.40{+0.10}_{-0.09}$ g cm$^{3}$ implying that Kepler-91b is somewhat inflated. Specifically, we highlight the consistency between the planet mass we obtain with radial velocity observations and the mass\citet{lillo14} obtains from the phase curve alone. Kepler-91b is one of a growing number of examples demonstrating that hot Jupiter densities can be estimated from Kepler data alone \citep{barclay12,quintana13,esteves13}.
 
 \citet{lillo14} suggest that Kepler-91b may be on an eccentric orbit. In Figure~\ref{fig:ecc} we show our posterior distribution for eccentricity derived from our $e\sin{\omega}$ and $e\cos{\omega}$ samples. While the data prefers an eccentric model, a circular orbit is not formally ruled out.
 
