@@ -30,7 +30,7 @@
 
 
 \begin{abstract}
-Kepler-91b was detected using data from the Kepler spacecraft and its planetary nature was confirmed through analysis of the light curve. Recently these data have been reanalyzed and questions have been raised as to whether a planet actually orbits Kepler-91. We simultaneous modeled the Kepler data and ground-based radial velocity observations from the Hobby-Eberly Telescope and find that Kepler-91b is unambiguously a planet orbiting a red giant host star. The star exhibits temporally correlated noise which we model as a Gaussian process. It is this noise component that we hypothesize led previous studies to suspect Kepler-91b as a false positive. This work validates the conclusions presented in the discovery paper that Kepler-91b is a $0.73\pm 13$ M$_{Jup}$ planet. 
+Kepler-91b was detected using data from the Kepler spacecraft and its planetary nature was confirmed through analysis of the light curve. Recently these data have been reanalyzed and questions have been raised as to whether a planet actually orbits Kepler-91. We simultaneous modeled the Kepler data and ground-based radial velocity observations from the Hobby-Eberly Telescope and find that Kepler-91b is unambiguously a planet orbiting a red giant host star. The star exhibits temporally correlated noise which we model as a Gaussian process. It is this noise component that we hypothesize led previous studies to suspect Kepler-91b as a false positive. This work validates the conclusions presented in the discovery paper that Kepler-91b is a $0.73\pm 13$ M$_{Jup}$ planet.
 \end{abstract}
 
 \keywords{planetary systems; stars: individual (Kepler-91, KIC 8219268, KOI-2133); techniques: photometric, radial velocities; methods: data analysis, statistical }
@@ -66,7 +66,7 @@ Stellar radius, $R_\star$ ($R_\odot$)		&	$6.30 \pm 0.16$ \\
 
 
 \subsection{Kepler data}
-In this work we utilize the full set of Kepler long cadence (29.4-min) observation from the Kepler spacecraft obtained over 4 years. These data consist of 17 observational Quarters  (Q1--Q17) where all but the first and last Quarter consist of around 90 days of near continuous data. Q1 lasted 40 days and Q17 consists of 31 days of data after which Kepler suffered the failure of a reaction wheel. 
+In this work we utilize the full set of Kepler long cadence (29.4-min) observation from the Kepler spacecraft obtained over 4 years. These data consist of 17 observational Quarters  (Q1--Q17) where all but the first and last Quarter consist of around 90 days of near continuous data. Q1 lasted 40 days and Q17 consists of 31 days of data after which Kepler suffered the failure of a reaction wheel.
 
 We use data that has undergone Presearch Data Conditioning \citep{stumpe12,smith12} using the multi scale maximum a priori (MS-MAP) method \citep{stumpe14}. This preprocessing removes signals related to the spacecraft while retaining variability of an astrophysical origin.
 
@@ -126,11 +126,11 @@ where $A_b$ is the semi-amplitude of the Doppler beaming signal $c$ is the speed
 
 We parameterized the combined model in terms of $\rho$ the mean stellar density, $zp$ a photometric zero point nuisance parameter, linear ($\gamma_1$) and quadratic ($\gamma_2$) limb darkening coefficients, $T_0$ the mid-point of transit, $P$ the orbital period of the planet, $b$ the impact parameter, $R_{p}/R_{\star}$ the planet-to-star radius ratio, eccentricity vectors $e\cos{\omega}$ and $e\sin{\omega}$ where $e$ is eccentricity and $\omega$ is the argument of periastron, the amplitude of the ellipsoid variations $A_e$, the amplitude of the refection from the planet $A_r$, the occultation depth $F_e$, radial velocity semi-amplitude $K$, and $V$ a radial velocity zero-point.
 
-Because we are using disparate data sets is it useful to include a parameter for both the light curve and radial velocity data that is an additional noise term which is added in quadrature with the formal uncertainty ($\sigma_{lc}$ and $\sigma_{rv}$). These account for missing physics on our model in addition to dealing with underestimation of the reported uncertainties. This creates a flexible model that enables us to scale the two data sets appropriately. 
+Because we are using disparate data sets is it useful to include a parameter for both the light curve and radial velocity data that is an additional noise term which is added in quadrature with the formal uncertainty ($\sigma_{lc}$ and $\sigma_{rv}$). These account for missing physics on our model in addition to dealing with underestimation of the reported uncertainties. This creates a flexible model that enables us to scale the two data sets appropriately.
 
 %\textbf{Maybe here for the section on the GP noise model. This needs to be given prominence in this paper because it's novel.}
 \subsection{Gaussian Process noise model}
-After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation (cite) to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}. \citet{huber13b} have shown this type of noise is \emph{can} be modeled by a two component (pink) noise model: a white Gaussian noise and a red noise component. 
+After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation (cite) to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}. \citet{huber13b} have shown this type of noise is \emph{can} be modeled by a two component (pink) noise model: a white Gaussian noise and a red noise component.
 
 We opted to model the noise using squared exponential Gaussian Process... \textbf{Dan FM to write GP section. I've called the GP components $A_{GP}$ and $l_{GP}$, lets think of better symbols for these.}
 is the lag in days$^2$?
@@ -242,7 +242,7 @@ Parameter&Best fit& Median&84.1\%&15.9\%\\
 %$K$ 	(m/s)		&72	& 67&{+10}&$-$10 \\
 %$\sigma_{lc}$ (ppm)	&0.6	& 1.3&{+1.4}&$-$0.9  \\
 %$\sigma_{rv}$ (m/s)	&	8.9& 9.0&{+8.2}&$-$6.2\\
-%$A_{GP}$ (ppm)&300& 301 & {+20}&$-$20 \\ 
+%$A_{GP}$ (ppm)&300& 301 & {+20}&$-$20 \\
 %$l_{GP}$  (days$^{2}$)&0.03729& 0.03711&{+0.00031}&$-$0.00030 \\
 %
 $\rho$ (g/cc)			&	0.00724		&	0.00730		&	+0.00010		&	$-$0.00010	\\
@@ -286,7 +286,7 @@ $\rho_{p}$ (g/cc) 		&	0.43			&	0.40			&	+0.10		&	$-$0.09		\\
 \end{tabular}
 \end{table}
 
-The 
+The
 
 \section{Discussion}
 We obtained good fits to both the radial velocity and light curve data with our model. The radial velocity observations phase well with the orbital period defined by the transit and therefore almost certainly are caused by a reflex motion of the star that the planet orbits. The transit model fits the data well with low eccentricity. If the density constraint from asterseismlogy were to be bad prior we would need a model with high eccentricity, which is not seen. The mass we derive is consistent with a planetary body. We therefore conclude Kepler-91b is unambiguously a planet.
@@ -307,7 +307,7 @@ We combined Kepler data presented in previous studies of Kepler-91 with radial v
 lets say how clever we are for using a GP...
 
 \acknowledgments
-This paper includes data collected by the Kepler mission. Funding for the Kepler mission is provided by the NASA Science Mission Directorate. Some Kepler data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST) at the Space Telescope Science Institute (STScI). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555. Support for MAST for non-HST data is provided by the NASA Office of Space Science via grant NNX09AF08G and by other grants and contracts. Our MCMC simulations were performed on the Pleiades supercomputer of the NASA Advanced Supercomputing Division at NASA's Ames Research Center. We used data obtained from The Hobby-Eberly Telescope (HET), a joint project of the University of Texas at Austin, the Pennsylvania State University, Stanford University, Ludwig-Maximilians-Universit\"{a}t M\"{u}nchen, and Georg-August-Universit\"{a}t G\"{o}ttingen. The HET is named in honor of its principal benefactors, William P. Hobby and Robert E. Eberly. We thank Ruth Angus for valuable discussions on noise sources in RV observations. E.V.Q. is supported by a NASA Senior Fellowship at the Ames Research Center, administered by Oak Ridge Associated Universities through a contract with NASA. D.H. acknowledges support by the Kepler Participating Scientist Program. 
+This paper includes data collected by the Kepler mission. Funding for the Kepler mission is provided by the NASA Science Mission Directorate. Some Kepler data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST) at the Space Telescope Science Institute (STScI). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555. Support for MAST for non-HST data is provided by the NASA Office of Space Science via grant NNX09AF08G and by other grants and contracts. Our MCMC simulations were performed on the Pleiades supercomputer of the NASA Advanced Supercomputing Division at NASA's Ames Research Center. We used data obtained from The Hobby-Eberly Telescope (HET), a joint project of the University of Texas at Austin, the Pennsylvania State University, Stanford University, Ludwig-Maximilians-Universit\"{a}t M\"{u}nchen, and Georg-August-Universit\"{a}t G\"{o}ttingen. The HET is named in honor of its principal benefactors, William P. Hobby and Robert E. Eberly. We thank Ruth Angus for valuable discussions on noise sources in RV observations. E.V.Q. is supported by a NASA Senior Fellowship at the Ames Research Center, administered by Oak Ridge Associated Universities through a contract with NASA. D.H. acknowledges support by the Kepler Participating Scientist Program.
 
 
 
