@@ -1,5 +1,7 @@
 \documentclass[apjl]{emulateapj}
 
+\include{vc}
+
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
@@ -305,6 +307,13 @@ Therefore, underestimating $R_{p}/R_{\star}$ will overestimate the albedo $A_g$.
 We combined Kepler data presented in previous studies of Kepler-91 with radial velocity data obtained from the Hobby-Eberly Telescope. We find that these data can be fit in a self consistent manner and the results lead us to conclude that Kepler-91b is a planet, validating the work of \citet{lillo14}. We hypothesize that recent work claiming this as a false positive erred owing to the challenge of modeling a star with a strong correlated noise component and relatively high amplitude out-of-transit variations. We use a Gaussian Process to model the correlated noise precent in the light curve of this red giant star. Our choice of the squared exponential kernel...
 
 lets say how clever we are for using a GP...
+
+All of the code used in this project is available from
+{https://github.com/mrtommyb/GP\_model\_Kepler\_data} under the MIT
+open-source software license.
+This code (plus some dependencies) can be run to re-generate all of the
+figures and results in this paper; this version of the paper was generated
+with git commit \texttt{\githash} (\gitdate).
 
 \acknowledgments
 This paper includes data collected by the Kepler mission. Funding for the Kepler mission is provided by the NASA Science Mission Directorate. Some Kepler data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST) at the Space Telescope Science Institute (STScI). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555. Support for MAST for non-HST data is provided by the NASA Office of Space Science via grant NNX09AF08G and by other grants and contracts. Our MCMC simulations were performed on the Pleiades supercomputer of the NASA Advanced Supercomputing Division at NASA's Ames Research Center. We used data obtained from The Hobby-Eberly Telescope (HET), a joint project of the University of Texas at Austin, the Pennsylvania State University, Stanford University, Ludwig-Maximilians-Universit\"{a}t M\"{u}nchen, and Georg-August-Universit\"{a}t G\"{o}ttingen. The HET is named in honor of its principal benefactors, William P. Hobby and Robert E. Eberly. We thank Ruth Angus for valuable discussions on noise sources in RV observations. E.V.Q. is supported by a NASA Senior Fellowship at the Ames Research Center, administered by Oak Ridge Associated Universities through a contract with NASA. D.H. acknowledges support by the Kepler Participating Scientist Program.
