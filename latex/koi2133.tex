@@ -134,9 +134,30 @@ Because we are using disparate data sets is it useful to include a parameter for
 \subsection{Gaussian Process noise model}
 After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation \citep{mathur11} to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}. \citet{huber13b} have shown this type of noise is \emph{can} be modeled by a two component (pink) noise model: a white Gaussian noise and a red noise component.
 
-We opted to model the noise using squared exponential Gaussian Process... \textbf{Dan FM to write GP section. I've called the GP components $A_{GP}$ and $l_{GP}$, lets think of better symbols for these.}
-is the lag in days$^2$?
-cite this guy: \citet{ambikasaran14}
+A Gaussian process is a general framework for modeling correlated noise
+\citep{rasmussen} and it has been applied to transmission spectroscopy
+\citep{gibson-gp,evans-gp} and Kepler light curves \citep[][Dawson
+\emph{et al.}\ in press]{ambikasaran14}.
+The basic idea is to model the light curve as being drawn from a large
+$N_\mathrm{data}$-dimensional Gaussian where the covariance matrix $K$ is
+modeled as
+\begin{eqnarray}
+K_{ij} &=& \sigma_i^2\,\delta_{ij} + k(t_i,\,t_j)
+\end{eqnarray}
+where $\sigma_i$ is the observational uncertainty, $\delta_{ij}$ is the
+Kronecker delta, and $k(t_i,\,t_j)$ is the so-called \emph{covariance kernel
+function} that quantifies the correlations between data points.
+There is a lot of freedom in how we choose this covariance function but here
+we'll choose a very simple and commonly used model called the
+squared-exponential or radial basis function kernel
+\begin{eqnarray}
+k(t_i,\,t_j) &=& A^2\,\exp\left(-\frac{[t_i-t_j]^2}{2\,\tau^2}\right)
+\end{eqnarray}
+where the covariance amplitude $A$ is measured in flux units and the length
+scale $\tau$ is measured in days.
+When fitting the data, we marginalize over the parameters $A$ and $\tau$ with
+log-uniform priors.
+
 
 %However, we opted to model the noise as three sources in the frequency domain, a flat white noise component, a half-Lorentzian centered at zero frequency, and a Gaussian at the frequency of the solar-like oscillations. At each realization of the light curve model we fit a noise model to the power spectra density of the residuals when the light curve model has been subtracted from the observed flux. There are six free parameters in the noise model; a white noise background, an amplitude and width of the half-Lorentzian and the mean, standard deviation and amplitude of a Gaussian. The noise model is built upon an adaptive Wiener filter \citep{wiener49,astroML,astroMLText}. The fit performed using a bounded limited-memory Broyden-Fletcher-Goldfarb-Shanno optimization \citep{zhu97} implemented in Scipy \citep{scipy}. We opted to use a bounded optimization to keep the mean of the Gaussian component in the region of frequency space where we have prior knowledge of solar-like oscillations. The noise model is then convolved with the power spectral density of the light curve model subtracted flux and this is then transformed back into the time domain. The log-likelihood of the realization is calculated assuming a Gaussian of residuals after the noise model is subtracted from the flux.
 
