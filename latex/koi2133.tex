@@ -14,8 +14,8 @@
 
 
 \begin{document}
-\title{Radial velocity confirmation of a transiting 0.75 jupiter-mass planet orbiting the red giant star Kepler-91}
-%\title{Confirmation of Kepler-91\lowercase{b} as a giant low-density planet orbiting a giant low-density star}
+%\title{Radial velocity confirmation of a transiting 0.75 jupiter-mass planet orbiting the red giant star Kepler-91}
+\title{Confirmation of Kepler-91\lowercase{b} as a giant low-density planet orbiting a giant low-density star}
 %\title{Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star: an analysis utilizing radial velocity observations and Gaussian Process light curve noise modeling}
 %\title{Radial velocity observations and light curve noise modeling reveal Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star}
 %\title{Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star}
@@ -32,7 +32,7 @@
 
 
 \begin{abstract}
-Kepler-91b was detected using data from the Kepler spacecraft and its planetary nature was confirmed through analysis of the light curve. Recently these data have been reanalyzed and questions have been raised as to whether a planet actually orbits Kepler-91. We simultaneous modeled the Kepler data and ground-based radial velocity observations from the Hobby-Eberly Telescope and find that Kepler-91b is unambiguously a planet orbiting a red giant host star. The star exhibits temporally correlated noise which we model as a Gaussian process. It is this noise component that we hypothesize led previous studies to suspect Kepler-91b as a false positive. This work validates the conclusions presented in the discovery paper that Kepler-91b is a $0.73\pm 13$ M$_{Jup}$ planet.
+Kepler-91b was detected using data from the Kepler spacecraft and its planetary nature was confirmed through analysis of the light curve. Recently these data have been reanalyzed and questions have been raised as to whether a planet actually orbits Kepler-91. We simultaneous modeled the Kepler data and ground-based radial velocity observations from the Hobby-Eberly Telescope and find that Kepler-91b is unambiguously a planet orbiting a red giant host star. The star exhibits temporally correlated stellar noise which we model as a Gaussian process. It is this noise component that we hypothesize led previous studies to suspect Kepler-91b as a false positive. This work validates the conclusions presented in the discovery paper that Kepler-91b is a $0.73\pm 13$ M$_{Jup}$ planet.
 \end{abstract}
 
 \keywords{planetary systems; stars: individual (Kepler-91, KIC 8219268, KOI-2133); techniques: photometric, radial velocities; methods: data analysis, statistical }
@@ -132,7 +132,7 @@ Because we are using disparate data sets is it useful to include a parameter for
 
 %\textbf{Maybe here for the section on the GP noise model. This needs to be given prominence in this paper because it's novel.}
 \subsection{Gaussian Process noise model}
-After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation \citep{mathur11} to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}. \citet{huber13b} have shown this type of noise is \emph{can} be modeled by a two component (pink) noise model: a white Gaussian noise and a red noise component.
+After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation \citep{mathur11} to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}. 
 
 A Gaussian process is a general framework for modeling correlated noise
 \citep{rasmussen} and it has been applied to transmission spectroscopy
@@ -153,10 +153,10 @@ squared-exponential or radial basis function kernel
 \begin{eqnarray}
 k(t_i,\,t_j) &=& A^2\,\exp\left(-\frac{[t_i-t_j]^2}{2\,\tau^2}\right)
 \end{eqnarray}
-where the covariance amplitude $A$ is measured in flux units and the length
-scale $\tau$ is measured in days.
-When fitting the data, we marginalize over the parameters $A$ and $\tau$ with
-log-uniform priors.
+where the covariance amplitude $A_{GP}$ is measured in flux units and the length
+scale $\tau_{GP}$ is measured in days.
+When fitting the data, we marginalize over the parameters $A_{GP}$ and $\tau_{GP}$ with uniform priors. 
+%I used uniform priors... oops... it worked though
 
 
 %However, we opted to model the noise as three sources in the frequency domain, a flat white noise component, a half-Lorentzian centered at zero frequency, and a Gaussian at the frequency of the solar-like oscillations. At each realization of the light curve model we fit a noise model to the power spectra density of the residuals when the light curve model has been subtracted from the observed flux. There are six free parameters in the noise model; a white noise background, an amplitude and width of the half-Lorentzian and the mean, standard deviation and amplitude of a Gaussian. The noise model is built upon an adaptive Wiener filter \citep{wiener49,astroML,astroMLText}. The fit performed using a bounded limited-memory Broyden-Fletcher-Goldfarb-Shanno optimization \citep{zhu97} implemented in Scipy \citep{scipy}. We opted to use a bounded optimization to keep the mean of the Gaussian component in the region of frequency space where we have prior knowledge of solar-like oscillations. The noise model is then convolved with the power spectral density of the light curve model subtracted flux and this is then transformed back into the time domain. The log-likelihood of the realization is calculated assuming a Gaussian of residuals after the noise model is subtracted from the flux.
@@ -181,25 +181,25 @@ Priors on our model parameters are shown in Table~\ref{tab:priors}. On particula
 \begin{tabular}{l l }
 Property & Prior \\
 \hline
-$\rho$		&	$N(0.0073;0.0001)$ \\
-$zp$				& 	$U(-\infty;+\infty)$\\
+$\rho$ (g/cc)		&	$N(0.0073;0.0001)$ \\
+$zp$				& 	$U($-$0.0002;0.0002)$\\
 $\gamma_1$		&	$N(0.67;0.6)$ \\
 $\gamma_2$		&	$N(0.09;0.6)$\\
-$T_0$ & $U(-\infty;+\infty)$\\
-$P$ & $U(-\infty;+\infty)$\\
+$T_0$ (BKJD)& $U(136.3;136.5)$\\
+$P$ (days) & $U(6.2;6.3)$\\
 $b$ & $U(0;1+R_{p}/R_{\star})$\\
 $R_{p}/R_{\star}$ & $U(0;1)$ \\
 $e\cos{\omega}$ &$U(-1;1)$ \\
 $e\cos{\omega}$ & $U(-1;1)$\\
-$A_e$ &$U(-\infty;+\infty)$ \\
-$A_r$ & $U(-\infty;+\infty)$\\
-$F_e$ & $U(-\infty;+\infty)$\\
-$V$ &$U(-\infty;+\infty)$ \\
-$K$ &$U(-\infty;+\infty)$ \\
-$\sigma_{lc}$ & $U(0;+\infty)$\\
-$\sigma_{rv}$ &$U(0;+\infty)$ \\
-$A_{GP}$ &  $U(0;+\infty)$ \\
-$l_{GP}$ &  $U(0;+\infty)$ \\
+$A_e$ (ppm)&$U(-500;500)$ \\
+$A_r$ (ppm)& $U(-500;500)$\\
+$F_e$ (ppm)& $U(-500;500)$\\
+$V$ (m/s)&$U(-300;300)$ \\
+$K$ (m/s)&$U(-1000;1000)$ \\
+$\sigma_{lc}$ & $U(0;0.1)$\\
+$\sigma_{rv}$ (m/s)&$U(0;100)$ \\
+$A_{GP}$ &  $U(0;0.001$ \\
+$\tau_{GP}$ &  $U(0;0.5)$ \\
 \hline
 \end{tabular}
 \end{table}
@@ -286,7 +286,7 @@ $K$ 	(m/s)				&	70			&	67			&	+11			&	$-$11		\\
 $\sigma_{lc}$ (ppm)		&	0.6			&	1.3			&	+1.4			&	$-$0.9		\\
 $\sigma_{rv}$ (m/s)		&	8.3			&	11			&	+12			&	$-$8			\\
 $A_{GP}$ (ppm)		&	301.6		&	301.2		&	+2.0			&	$-$2.0		\\
-$l_{GP}$  (days$^{2}$)	&	0.03717		&	0.03711		&	+0.00031		&	$-$0.00030	\\
+$\tau_{GP}$  (days)		&	0.03717		&	0.03711		&	+0.00031		&	$-$0.00030	\\
 %
 %
 \hline
