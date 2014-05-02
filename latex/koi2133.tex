@@ -126,13 +126,13 @@ A_b = B \frac{K}{c} (e\cos{\omega})
 \end{equation}
 where $A_b$ is the semi-amplitude of the Doppler beaming signal $c$ is the speed of light and $e$ is the eccentricity and $\omega$ is the argument of periastron. We calculated $B$ in the manner described by \citet{bloemen11} to find a value of 5.46 which we kept fixed.
 
-We parameterized the combined model in terms of $\rho$ the mean stellar density, $zp$ a photometric zero point nuisance parameter, linear ($\gamma_1$) and quadratic ($\gamma_2$) limb darkening coefficients, $T_0$ the mid-point of transit, $P$ the orbital period of the planet, $b$ the impact parameter, $R_{p}/R_{\star}$ the planet-to-star radius ratio, eccentricity vectors $e\cos{\omega}$ and $e\sin{\omega}$ where $e$ is eccentricity and $\omega$ is the argument of periastron, the amplitude of the ellipsoid variations $A_e$, the amplitude of the refection from the planet $A_r$, the occultation depth $F_e$, radial velocity semi-amplitude $K$, and $V$ a radial velocity zero-point.
+We parameterized the combined model in terms of $\rho$ the mean stellar density, $zp$ a photometric zero point nuisance parameter, linear ($\gamma_1$) and quadratic ($\gamma_2$) limb darkening coefficients, $T_0$ the mid-point of transit, $P$ the orbital period of the planet, $b$ the impact parameter, $R_{p}/R_{\star}$ the planet-to-star radius ratio, eccentricity vectors $e\cos{\omega}$ and $e\sin{\omega}$ where $e$ is eccentricity and $\omega$ is the argument of periastron, the amplitude of the ellipsoid variations $A_e$, the amplitude of the reflection from the planet $A_r$, the occultation depth $F_e$, radial velocity semi-amplitude $K$, and $V$ a radial velocity zero-point.
 
 Because we are using disparate data sets is it useful to include a parameter for both the light curve and radial velocity data that is an additional noise term which is added in quadrature with the formal uncertainty ($\sigma_{lc}$ and $\sigma_{rv}$). These account for missing physics on our model in addition to dealing with underestimation of the reported uncertainties. This creates a flexible model that enables us to scale the two data sets appropriately.
 
 %\textbf{Maybe here for the section on the GP noise model. This needs to be given prominence in this paper because it's novel.}
 \subsection{Gaussian Process noise model}
-After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation \citep{mathur11} to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}. 
+After examining the PDC data we noted the presence of a broad low frequency noise component in the time series. Red giants are known to show granulation \citep{mathur11} to which we attribute the low frequency noise component. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}.
 
 A Gaussian process is a general framework for modeling correlated noise
 \citep{rasmussen} and it has been applied to transmission spectroscopy
@@ -155,7 +155,7 @@ k(t_i,\,t_j) &=& A^2\,\exp\left(-\frac{[t_i-t_j]^2}{2\,\tau^2}\right)
 \end{eqnarray}
 where the covariance amplitude $A_{GP}$ is measured in flux units and the length
 scale $\tau_{GP}$ is measured in days.
-When fitting the data, we marginalize over the parameters $A_{GP}$ and $\tau_{GP}$ with uniform priors. 
+When fitting the data, we marginalize over the parameters $A_{GP}$ and $\tau_{GP}$ with uniform priors.
 %I used uniform priors... oops... it worked though
 
 
