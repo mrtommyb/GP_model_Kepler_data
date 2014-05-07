@@ -10,14 +10,14 @@
 
 
 \shortauthors{Barclay et al. 2013}
-\shorttitle{Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star}
+\shorttitle{Kepler-91\lowercase{b} is a giant planet orbiting a giant star}
 
 
 \begin{document}
 %\title{Radial velocity confirmation of a transiting 0.75 jupiter-mass planet orbiting the red giant star Kepler-91}
-\title{Confirmation of Kepler-91\lowercase{b} as a giant low-density planet orbiting a giant low-density star}
+%\title{Confirmation of Kepler-91\lowercase{b} as a giant low-density planet orbiting a giant low-density star}
 %\title{Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star: an analysis utilizing radial velocity observations and Gaussian Process light curve noise modeling}
-%\title{Radial velocity observations and light curve noise modeling reveal Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star}
+\title{Radial velocity observations and light curve noise modeling reveal Kepler-91\lowercase{b} as a giant planet orbiting a star}
 %\title{Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star}
 % I kinda want to mention RV and GP in the title
 \author{Thomas Barclay$^{1,2}$, Michael Endl$^{3}$, Daniel Huber$^{1,4}$,  Daniel Foreman-Mackey$^{5}$, William D. Cochran$^{3}$, Phillip J. MacQueen$^{3}$ and Elisa V. Quintana$^{1,6}$}
@@ -220,11 +220,12 @@ $\tau_{GP}$ &  $U(0;0.5)$ \\
 \subsection{Markov-Chain Monte Carlo modeling}
 We numerically integrated the posterior probability using an efficient affine invariant Markov-Chain Monte Carlo (MCMC) algorithm \citep{goodman10,foreman13}.  This method utilizes many walkers to reduce autocorrelation time; we opted to use 700 walkers each taking 15,000 steps for a total of $10.5\times10^6$ samples of the posterior probability. However, we toss the first 5,000 samples in each walker as burn-in which leaves $7\times10^6$ samples use to calculate posterior distributions.
 
-In Figure~\ref{fig:filter} we show two transits in Kepler data, the mean noise model, the light curve model and the combined light curve and noise model. The noise model does a good job of matching the correlated noise seen in the data.
+In Figure~\ref{fig:filter} we show ten transits in Kepler data, the mean noise model, the light curve model and the combined light curve and noise model. The combination of our noise model and transit model does a good job of matching the correlated noise and planet signals seen in the data.
 
 \begin{figure}
-\includegraphics[width=0.50\textwidth]{noisemodel.png}
-\caption{A small section of the observed Kepler data shown to demonstrate our noise model. The observed data is shown as black points, the noise model in blue, the light curve model in red and the combined light curve and noise model in purple. Two transits are shown in plot. }
+\includegraphics[width=0.50\textwidth]{ten_transits.png}
+%\caption{A small section of the observed Kepler data shown to demonstrate our noise model. The observed data is shown as black points, the noise model in blue, the light curve model in red and the combined light curve and noise model in purple. Two transits are shown in plot. }
+\caption{Ten transits are shown to demonstrate out noise model. The observed data is shown as black points, the noise model in blue, the light curve model in red and the combined light curve and noise model in purple.}
 \label{fig:filter}
 \end{figure}
 
@@ -341,15 +342,15 @@ Therefore, underestimating $R_{p}/R_{\star}$ will overestimate the albedo $A_g$.
 \section{Conclusions}
 We combined Kepler data presented in previous studies of Kepler-91 with radial velocity data obtained from the Hobby-Eberly Telescope. We find that these data can be fit in a self consistent manner and the results lead us to conclude that Kepler-91b is a planet, validating the work of \citet{lillo14}. We hypothesize that recent work claiming this as a false positive erred owing to the challenge of modeling a star with a strong correlated noise component and relatively high amplitude out-of-transit variations. We use a Gaussian Process to model the correlated noise present in the light curve of this red giant star. This method may prove to be very useful in future studies of transiting exoplanet exhibiting correlated noise properties.
 
-The validation of Kepler-91 presented in this work confirms that hot Jupiters exist in close-in orbits around red giant stars. Future studies of Kepler-91 and similar planets will allow insights on the internal composition of hot Jupiters as a function of host star evolution (Spiegel & Madhusudhan 2012), and measurements of the spin-orbit inclination of such systems may allow to test theories of obliquity damping that have been proposed for hot Jupiter populations around less evolved stars (Winn et al. 2010).
+The validation of Kepler-91 presented in this work confirms that hot Jupiters exist in close-in orbits around red giant stars. Future studies of Kepler-91 and similar planets will allow insights on the internal composition of hot Jupiters as a function of host star evolution (Spiegel \& Madhusudhan 2012), and measurements of the spin-orbit inclination of such systems may allow to test theories of obliquity damping that have been proposed for hot Jupiter populations around less evolved stars (Winn et al. 2010).
 
 
-All of the code used in this project is available from
-{https://github.com/mrtommyb/GP\_model\_Kepler\_data} under the MIT
-open-source software license.
-This code (plus some dependencies) can be run to re-generate all of the
-figures and results in this paper; this version of the paper was generated
-with git commit \texttt{\githash} (\gitdate).
+%All of the code used in this project is available from
+%{https://github.com/mrtommyb/GP\_model\_Kepler\_data} under the MIT
+%open-source software license.
+%This code (plus some dependencies) can be run to re-generate all of the
+%figures and results in this paper; this version of the paper was generated
+%with git commit \texttt{\githash} (\gitdate).
 
 \acknowledgments
 This paper includes data collected by the Kepler mission. Funding for the Kepler mission is provided by the NASA Science Mission Directorate. We would like to express out gratitude to all those working on the Kepler pipeline over the many years of the Kepler mission. Some Kepler data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST) at the Space Telescope Science Institute (STScI). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555. Support for MAST for non-HST data is provided by the NASA Office of Space Science via grant NNX09AF08G and by other grants and contracts. Our MCMC simulations were performed on the Pleiades supercomputer of the NASA Advanced Supercomputing Division at NASA's Ames Research Center. We used data obtained from The Hobby-Eberly Telescope (HET), a joint project of the University of Texas at Austin, the Pennsylvania State University, Stanford University, Ludwig-Maximilians-Universit\"{a}t M\"{u}nchen, and Georg-August-Universit\"{a}t G\"{o}ttingen. The HET is named in honor of its principal benefactors, William P. Hobby and Robert E. Eberly. We thank Ruth Angus for valuable discussions on noise sources in RV observations. E.V.Q. is supported by a NASA Senior Fellowship at the Ames Research Center, administered by Oak Ridge Associated Universities through a contract with NASA. D.H. acknowledges support by NASA under Grant NNX14AB92G issued through the Kepler Participating Scientist Program.

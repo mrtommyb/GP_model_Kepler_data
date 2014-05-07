@@ -91,7 +91,7 @@ if __name__ == '__main__':
     rvtime = f['rvtime']
 
     doplot = True
-    plot_many = True
+    plot_many = False
     if plot_many and doplot:
         samples, tmod = get_many_samples(mle,time,flux,ferr,rvtime,
             nsamples=300)
@@ -136,6 +136,39 @@ if __name__ == '__main__':
         ax1.set_xlabel('Time (BJD-2454833)',labelpad=12)
         ax1.set_ylabel('Relative flux')
         ax1.minorticks_on()
+
+    many_plots = True
+    if many_plots:
+        period = mle[8]
+        T0 = mle[7]
+        fig, (axes) = plt.subplots(5, 2, sharex=False, sharey=True,
+            figsize=[7,14])
+        axes = axes.flatten()
+        for i,offset in enumerate(T0 + period*np.arange(67,77,1)):
+            if i == 2:
+                offset = T0 + period*77
+            elif i == 7:
+                offset = T0 + period*78
+            win = 1.3
+            trange = (time < offset+win) & (time > offset-win)
+
+            axes[i].scatter(time[trange],flux[trange]
+                ,s=1,label='Kepler data')
+            axes[i].plot(time[trange],sample[trange],
+                color='b',label='Noise model')
+            axes[i].plot(time[trange],tmod1[trange],
+                color='r',lw=1.5
+                label='Light curve model')
+            axes[i].plot(time[trange],sample[trange]+tmod1[trange],
+                color='purple',
+                label='Light curve + noise model',lw=2)
+            axes[i].set_xlim([offset-win,offset+win])
+            axes[i].tick_params(labelbottom=False,labelleft=False)
+            axes[i].minorticks_on()
+        axes[i].set_ylim([-0.0017,0.0012])
+        plt.subplots_adjust(wspace=0, hspace=0)
+
+
 
 
 
