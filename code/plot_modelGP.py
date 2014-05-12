@@ -153,7 +153,8 @@ def plot_rv_best(hf,ax,ylim=[-420,420]):
 
         ax.errorbar(np.r_[phi,phi+M.period],
             np.r_[ffold,ffold],
-            yerr=np.r_[efold,efold],color='k',alpha=1,ls='')
+            yerr=np.r_[efold,efold],color='k',alpha=1,ls='',
+            fmt='.')
 
         ax.set_xlim([-0.5*M.period,1.5*M.period])
         ax.set_ylim(ylim)

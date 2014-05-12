@@ -157,7 +157,7 @@ if __name__ == '__main__':
             axes[i].plot(time[trange],sample[trange],
                 color='b',label='Noise model')
             axes[i].plot(time[trange],tmod1[trange],
-                color='r',lw=1.5
+                color='r',lw=1.5,
                 label='Light curve model')
             axes[i].plot(time[trange],sample[trange]+tmod1[trange],
                 color='purple',
