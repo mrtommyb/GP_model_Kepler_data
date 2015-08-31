@@ -1,0 +1,744 @@
+\documentclass[apjl]{emulateapj}
+
+\include{vc}
+
+\usepackage[english]{babel}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+
+
+\shortauthors{Barclay et al. 2013}
+\shorttitle{Kepler-91\lowercase{b} is a giant planet orbiting a giant star}
+
+\begin{document}
+%\title{Radial velocity confirmation of a transiting 0.75 jupiter-mass planet orbiting the red giant star Kepler-91}
+%\title{Confirmation of Kepler-91\lowercase{b} as a giant low-density planet orbiting a giant low-density star}
+%\title{Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star: an analysis utilizing radial velocity observations and Gaussian Process light curve noise modeling}
+\title{Radial velocity observations and light curve noise modeling confirm that Kepler-91\lowercase{b} is a giant planet orbiting a giant star\footnotemark[1]}
+\footnotetext[1]{Based partly on observations obtained with the Hobby-Eberly Telescope, which is a joint project of the University of Texas at Austin, the Pennsylvania State University, Stanford University, Ludwig-Maximilians-Universit\"{a}t M\"{u}nchen, and Georg-August-Universit\"{a}t G\"{o}ttingen.}
+
+%% outside the title), rather that simply a \footnote{}. 
+%\title{Kepler-91\lowercase{b} is a giant low-density planet orbiting a giant low-density star}
+% I kinda want to mention RV and GP in the title
+\author{Thomas Barclay$^{2,3}$, Michael Endl$^{4}$, Daniel Huber$^{2,5}$,  Daniel Foreman-Mackey$^{6}$, William D. Cochran$^{4}$, Phillip J. MacQueen$^{4}$, Jason F. Rowe$^{2,5}$ and Elisa V. Quintana$^{2,7}$}
+
+\slugcomment{Accepted for publication in ApJ}
+
+\altaffiltext{2}{NASA Ames Research Center, M/S 244-30, Moffett Field, CA 94035, USA}
+\altaffiltext{3}{Bay Area Environmental Research Institute, 596 1st Street West, Sonoma, CA 95476, USA}
+\altaffiltext{4}{McDonald Observatory, The University of Texas at Austin, Austin, TX 78712, USA}
+\altaffiltext{5}{SETI Institute, 189 Bernardo Ave, Suite 100, Mountain View, CA 94043, USA}
+\altaffiltext{6}{New York University, Center for Cosmology \& Particle Physics, New York, NY 10003, USA}
+\altaffiltext{7}{NASA Senior Fellow}
+
+\setcounter{footnote}{7}
+
+\begin{abstract}
+Kepler-91b is a rare example of a transiting hot Jupiter around a red giant star, providing the possibility to study the formation and composition of hot Jupiters under different conditions compared to main-sequence stars. However, the planetary nature of Kepler-91b, which was confirmed using phase-curve variations by Lillo-Box et al., was recently called into question based on a re-analysis of \emph{Kepler} data. We have obtained ground-based radial velocity observations from the Hobby-Eberly Telescope and unambiguously confirm the planetary nature of Kepler-91b by simultaneously modeling the \emph{Kepler} and radial velocity data. The star exhibits temporally correlated noise due to stellar granulation which we model as a Gaussian Process. We hypothesize that it is this noise component that led previous studies to suspect Kepler-91b to be a false positive. Our work confirms the conclusions presented by Lillo-Box et al. that Kepler-91b is a $0.73\pm0.13$ M$_{Jup}$ planet orbiting a red giant star.
+%
+%
+%Kepler-91b was detected using data from the Kepler spacecraft and its planetary nature was confirmed through analysis of the light curve. Recently these data have been reanalyzed and questions have been raised as to whether a planet actually orbits Kepler-91. We simultaneous modeled the Kepler data and ground-based radial velocity observations from the Hobby-Eberly Telescope and find that Kepler-91b is unambiguously a planet orbiting a red giant host star. The star exhibits temporally correlated stellar noise which we model as a Gaussian process. It is this noise component that we hypothesize led previous studies to suspect Kepler-91b as a false positive. This work validates the conclusions presented in the discovery paper that Kepler-91b is a $0.73\pm 13$ M$_{Jup}$ planet.
+\end{abstract}
+
+\keywords{planetary systems; stars: individual (Kepler-91, KIC 8219268, KOI-2133); techniques: photometric, radial velocities; methods: data analysis, statistical }
+
+\section{Introduction}
+The first discovered exoplanets orbiting non-degenerate stars were Jupiter-sized \citep{campbell88} and most orbited just a few stellar radii from their host star \citep{mayor95,marcy96}. This was a milestone moment that demonstrated planetary systems need not resemble our own. While data from the \emph{Kepler} spacecraft have revealed that planetary systems come in many flavors \citep[e.g.][]{lissauer11,carter12,barclay13}, hot Jupiters remain a key area of interest because the large sizes of these planets and their short orbital periods yield the highest signal to noise light curve data with which otherwise undetectable effects can be observed. Examples of this include the detection of in-homogenous clouds \citep{demory13} and the determination of planet masses from Doppler boosting \citep{shporer11,barclay12}.
+
+Additionally the formation of hot Jupiters is still highly debated, with competing theories including migration through the protoplanetary disk \citep{lin96} and high eccentricity migration triggered by dynamical events such as planet-planet scattering \citep{nagasawa08}. The confirmation and characterization of new systems, in particular for evolved stars for which only a handful of hot Jupiters are known, is important to shed light on the origin of these planets.
+
+Kepler-91 was designated KIC 8219268  in the Kepler Input Catalog \citep{brown11}. The star was observed for the entire four year duration of the \emph{Kepler} mission in long cadence mode. The star exhibits stochastic oscillations which confirm that Kepler-91 is an ascending red-giant branch star with a mass of 1.3 $M_\odot$ and radius of 6.3 $R_\odot$ \citep{huber13,lillo14}.
+
+
+%It was shown to display solar-like oscillations from which stellar mass of 1.3 $M_\odot$ and radius of 6.3 $R_\odot$ was derived, indicating this is a K-type giant with a density of 0.0073 g cc$^{-3}$ \citep{huber13,lillo14}.
+
+A transiting planet candidate with an orbital period of 6.3 days was detected by the \emph{Kepler} pipeline \citep{jenkins10,tenenbaum13} and assigned Kepler Object of Interest (KOI) number 2133.01 \citep{batalha12}. \citet{lillo14} confirmed the planetary nature of the apparently transiting body. However, the status of this planet has recently been called into question by both \citet{esteves13}, who use phase variations to deduce that the occulting body is self-luminous, and \citet{sliski14} who find that the stellar density derived from a transit model differs significantly from the density calculated using asteroseismic techniques. In this paper we present the results of a light curve model combined with radial velocity observations obtained from the ground and find that the transit-signal is unambiguously caused by a Jupiter-sized planet orbiting the red giant target star\footnote{We reported our radial velocity detection on the Kepler Community Follow-up Observing Program (CFOP) website (\url{http://cfop.ipac.caltech.edu}) in 2012. We encourage the community to make use of this resource.}.
+
+
+\section{Observational data used in this study}
+
+\subsection{Stellar properties}
+%Solar-like oscillations were detected in the Kepler time series data of Kepler-91 \citep{huber13}. By combining these observations with a temperature and metallicity derived from optical spectroscopy, it was determined that Kepler-91b was unambiguously a giant star. \citet{lillo14} performed a more detailed asteroseismic analysis by fitting individual frequencies. The stellar properties adopted in this paper from \citeauthor{lillo14} are reported in Table~\ref{tab:stellar}.
+
+
+The fundamental properties of Kepler-91 have been accurately determined through spectroscopic and asteroseismic analyses using global oscillation properties \citep{huber13} and individual frequency modeling \citep{lillo14} . Both analyses yielded consistent results. Given the increased precision and information on the interior structure when modeling individual frequencies, we have adopted the stellar properties by Lillo-Box et al. in our work (see Table~\ref{tab:stellar}).
+
+\begin{table}
+\centering
+\caption{Stellar properties adopted from \citet{lillo14}}\label{tab:stellar}
+\begin{tabular}{ll}
+Property & Adopted value \\
+\hline
+Effective temperature, $T_{eff}$ (K)		&	$4550\pm75$ \\
+Metallically, [Fe/H] (dex)				& 	$0.11 \pm0.07$\\
+Mean stellar density, $\rho$ (g cm$^{-3}$)		&	$0.0073 \pm0.0001$ \\
+Surface gravity, $\log{g}$ (dex, cgs)		&	$2.953 \pm 0.007$ \\
+Stellar mass, $M_\star$ ($M_\odot$)		&	$1.31 \pm 0.10$\\
+Stellar radius, $R_\star$ ($R_\odot$)		&	$6.30 \pm 0.16$ \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\subsection{\emph{Kepler} data}
+In this work we utilized the full set of \emph{Kepler} long cadence (29.4-min) observations from the \emph{Kepler} spacecraft obtained over 4 years. These data consist of 17 observational Quarters  (Q1--Q17) where all but the first and last Quarter consist of around 90 days of nearly continuous data. Q1 lasted 40 days and Q17 consists of 31 days of data after which \emph{Kepler} suffered the failure of a reaction wheel.
+
+We used data that have undergone Presearch Data Conditioning \citep{stumpe12,smith12} using the multi-scale maximum a priori (MS-MAP) method \citep{stumpe14}. This preprocessing removes signals related to the spacecraft while retaining much of the variability of astrophysical origin. The MS-MAP algorithm does not entirely retain astrophysical signals, however \citep{DRN21}. While short timescale events such as transits are largely unaffected, signals on timescales of the orbital period of Kepler-91 (6.3 d) are on average damped by about 5\%. The full photometric time series data used in this work in shown in Figure~\ref{fig:fulllcrv}.
+
+
+\begin{figure}
+\includegraphics[width=0.47\textwidth]{full_lcrv.pdf}
+\caption{The photometric time series we used in the analysis in this work is shown in grey. The light curve has been normalized to zero median. In blue we should the radial velocity data we collected using the Hobby-Eberly Telescope. The photometric and RV data are on the same time axis.}
+\label{fig:fulllcrv}
+\end{figure}
+
+
+
+
+\subsection{Radial velocity data}
+We obtained precise radial velocity measurements using the High-Resolution-Spectrograph (HRS) \citep{tull98}
+instrumental setup for \emph{Kepler} follow-up observations and data reduction algorithms as described in \citet{endl11}. Nine spectra were obtained using an iodine ($I_2$) cell with an exposure time of 900 s and are shown plotted as a function of time in Figure~\ref{fig:fulllcrv}. The data have a resolving power of $R = \lambda/\delta\lambda = 30,000$ and were sky background subtracted. We also obtained two template spectra (without the $I_2$ cell) of Kepler-91, one at $R=30,000$ and a second spectrum with $R=60,000$. The second template was obtained by combining four 900 s exposures and yielded better RV precision. The RV data reported here were obtained using the higher resolution template.
+
+We also measured bisectors and bisector velocity spans (BVS) for the 9 spectra used for the RV computation. We measured the bisector and BVS of the cross-correlation-function (CCF) for 11 orders that do not contain significant $I_2$ lines. We cross-correlated each spectrum with the $R=30,000$ template to search for variability of the BVS that could indicate a false positive and computed the BVS as the velocity difference of 2 arbitrary points on the CCF bisector at flux values of 0.4 and 0.84, following \citet{hatzes98}. The BVS results are displayed in Figure~\ref{fig:bisectors}. Excluding the poor
+quality measurement from the lowest S/N spectrum, the remaining data have a total rms-scatter of 15\,m\,s$^{-1}$ with a mean uncertainty of 35\,m\,s$^{-1}$. The BVS results are consistent with no variability and they also do not correlate with either the orbital phase or the RV measurements.
+
+
+%Kepler-91 was observed on nine occasions from the Hobby-Eberly Telescope (HET) with a spectral resolution of R=30,000. These radial velocity observations were provide good phase coverage over the 6.3-d orbital period reported by \citet{batalha12}. In Table~\ref{tab:rv} we list the radial velocities obtained, we subtracted a constant of -9399.96 m/s (the median of the velocities) from radial velocities that came from the analysis of the data for ease of presentation.
+
+%\textbf{Endl to provide some text describing the observations and data reduction}.
+
+
+\begin{table}\label{tab:rv}
+\centering
+\caption{Radial velocities}
+\begin{tabular}{r r r r r}
+Time & Velocity\footnote{the values presented here have had an arbitrary offset subtracted to enforce a median of zero}  & Uncertainty & BVS& Uncertainty \\
+(BJD-2454833) & (m/s) & (m/s) & (m/s) & (m/s)\\
+\hline
+1208.86670891		&	114 		&	24		&	-43	&	31\\
+1266.71041653		& 	21		&	18		&	-15	&	31\\
+1267.70865078		&	-25 		&	20		&	1	&	32\\
+1268.70698350		&	-46		&	17		&	-31	&	32\\
+1271.68968502		&	67		&	18		&	-18	&	28\\
+1275.69264679		&	-26		&	25		&	-3	&	56\\
+1300.86443801 	& 	-9		&	27		&	-198\footnote{This outlier comes from the lowest S/N spectrum and is mostly caused by the BVS result from just two of the 11 orders used.}	&	86\\
+1358.70858740 	& 	96		&	18		&	-1	&	32\\
+1382.63282948 	& 	0		&	15		&	-20	&	36\\
+\hline
+\end{tabular}
+\end{table}
+
+%We examined bisectors of spectral lines not contaminated with the iodine lines. As shown in Figure~\ref{fig:bisectors} there is no correlation between the orbital phase of the planet and the line bisectors. There is a single outlier RV observations, weighting this zero results in an rms bisector velocity span of 15 m/s. We therefore conclude that we are indeed observing reflex motion of the star.
+
+\begin{figure}
+\includegraphics[width=0.50\textwidth]{k02133_bvs_phas1.pdf}
+\caption{The bisector velocity spans of the nine HET observations of Kepler-91. There is a single outlier point which has a very large uncertainty. Excluding this leaves an rms scatter in the bisector velocity spans of 15 m/s. There is not obvious correlation with orbital phase.}
+\label{fig:bisectors}
+\end{figure}
+
+
+\section{Simultaneous modeling of \emph{Kepler} and RV data}
+To provide a self-consistent model of both the light curve and the radial velocity observations we chose to model both datasets simultaneously using the orbital model described in \citet{rowe14}.
+
+Significant planet-induced variability outside of the transit of Kepler-91b has been noted in previous work \citep{lillo14,esteves13}. We chose to model these light curve variations rather than remove them via filtering.  We include 5 physical components in our model of the light curve: a transit, an occultation, ellipsoidal modulation, Doppler boosting and reflection from the planet. We additionally include the radial velocity data as an additional component in the model and finally we include a model for the correlated noise.
+
+
+\subsection{Parameterization}
+We used a limb darkened transit model \citep{mandel02} following a quadratic limb darkening law, and a uniform disk model for the occultation.  The ellipsoidal variations, Doppler boosting and reflection of the planet were modeled in the manner described by \citet{lillo14}, but we parameterized the Doppler beaming in terms of $K$, the radial velocity semi-amplitude, to retain a consistent solution between the light curve data and the spectroscopic radial velocities. The scaling between the radial velocity semi-amplitude and the Doppler beaming amplitude is proportional to a `beaming factor' $B$ such that
+\begin{equation}
+A_b = B \frac{K}{c} (e\cos{\omega})
+\end{equation}
+where $A_b$ is the semi-amplitude of the Doppler beaming signal, $c$ is the speed of light, $e$ is the eccentricity and $\omega$ is the argument of periastron. We calculated $B$ in the manner described by \citet{bloemen11} and found a value of 5.46 which we kept fixed. 
+
+We parameterized the combined model in terms of $\rho$ the mean stellar density, $zp$ a photometric zero point nuisance parameter, linear ($\gamma_1$) and quadratic ($\gamma_2$) limb darkening coefficients, $T_0$ the mid-point of transit, $P$ the orbital period of the planet, $b$ the impact parameter, $R_{p}/R_{\star}$ the planet-to-star radius ratio, eccentricity vectors $e\cos{\omega}$ and $e\sin{\omega}$ where $e$ is eccentricity and $\omega$ is the argument of periastron, the amplitude of the ellipsoid variations $A_e$, the amplitude of the reflection from the planet $A_r$, the occultation depth $F_e$, radial velocity semi-amplitude $K$, and $V$ a radial velocity zero-point. We account for the 29.4-min integration time of the exposures by subsampling the model 11 times per observation then integrating over these subsamples \citep{kipping10}.
+
+Because we are using disparate data sets is it useful to include a parameter for both the light curve and radial velocity data that is an additional noise term which is added in quadrature with the formal uncertainty ($\sigma_{lc}$ and $\sigma_{rv}$). These account for missing physics on our model in addition to dealing with underestimation of the reported uncertainties. This creates a flexible model that enables us to scale the two data sets appropriately. We sample in the natural log of $\sigma_{lc}$ an $\sigma_{rv}$ which is equivalent to using a Jeffery's prior on these parameters.
+
+%\textbf{Maybe here for the section on the GP noise model. This needs to be given prominence in this paper because it's novel.}
+\subsection{Gaussian Process noise model}
+Red giants are known to show significant correlated noise on timescales of hours to weeks due to stellar granulation (Mathur et al. 2012), which is also clearly apparent in Kepler-91. Not accounting for this correlated noise component can bias the observed planet parameters \citep{carter09}.
+
+A Gaussian process is a general framework for modeling correlated noise
+\citep{rasmussen} and it has been applied to transmission spectroscopy
+\citep{gibson-gp,evans-gp} and \emph{Kepler} light curves \citep[][Dawson
+\emph{et al.}\ in press]{ambikasaran14}.
+The basic idea is to model the light curve as being drawn from a large
+$N_\mathrm{data}$-dimensional Gaussian where the covariance matrix $K$ is
+modeled as
+\begin{eqnarray}
+K_{ij} &=& \sigma_i^2\,\delta_{ij} + k(t_i,\,t_j)
+\end{eqnarray}
+where $\sigma_i$ is the observational uncertainty, $\delta_{ij}$ is the
+Kronecker delta, and $k(t_i,\,t_j)$ is the so-called \emph{covariance kernel
+function} that quantifies the correlations between data points.
+There is a lot of freedom in how we choose this covariance function but here
+we choose a very simple and commonly used model called the
+squared-exponential or radial basis function kernel
+\begin{eqnarray}
+k(t_i,\,t_j) &=& A^2\,\exp\left(-\frac{[t_i-t_j]^2}{2\,\tau^2}\right)
+\end{eqnarray}
+where the covariance amplitude $A_{GP}$ is measured in flux units and the length
+scale $\tau_{GP}$ is measured in days. We chose the squared-exponential kernel because it exhibits a number of traits that make it suitable for modeling granulation in red giant light curves: (a) it is smooth with no sharp discontinuities, and (b) the covariance between observed points is only a function of the distance (in time) between points.
+When performing our analysis, we first subtract a realization of the physical light curve model, then calculate the likelihood of the residuals given the covariance matrix defined by the Gaussian Process model. We marginalize over the parameters $A_{GP}$ and $\tau_{GP}$ with uniform priors in our MCMC analysis.
+%I used uniform priors... this is now fixed, I use Jeffer's priors
+
+
+%However, we opted to model the noise as three sources in the frequency domain, a flat white noise component, a half-Lorentzian centered at zero frequency, and a Gaussian at the frequency of the solar-like oscillations. At each realization of the light curve model we fit a noise model to the power spectra density of the residuals when the light curve model has been subtracted from the observed flux. There are six free parameters in the noise model; a white noise background, an amplitude and width of the half-Lorentzian and the mean, standard deviation and amplitude of a Gaussian. The noise model is built upon an adaptive Wiener filter \citep{wiener49,astroML,astroMLText}. The fit performed using a bounded limited-memory Broyden-Fletcher-Goldfarb-Shanno optimization \citep{zhu97} implemented in Scipy \citep{scipy}. We opted to use a bounded optimization to keep the mean of the Gaussian component in the region of frequency space where we have prior knowledge of solar-like oscillations. The noise model is then convolved with the power spectral density of the light curve model subtracted flux and this is then transformed back into the time domain. The log-likelihood of the realization is calculated assuming a Gaussian of residuals after the noise model is subtracted from the flux.
+
+
+
+
+%We opted to model the red noise as a Wiener process and account for it in our likelihood function. At realization of the model we first subtract the light curve model and then pass the data through an adaptive Wiener filter \citep{wiener49,astroML,astroMLText}, before calculating the log likelihood. The filter is adaptive because it optimizes the width and amplitude of a Gaussian function in the frequency domain. In Figure~\ref{fig:filter} we show a typical filter shape in the frequency domain.
+
+%\begin{figure}
+%\includegraphics[width=0.50\textwidth]{filter.png}
+%\caption{The power spectra density of the observe data is shown in black and a typical Wiener filter is shown in red. The filter captures the low frequency variability which we attribute to stellar granulation. }
+%\label{fig:filter}
+%\end{figure}
+
+\subsection{Priors}
+Priors on our model parameters are shown in Table~\ref{tab:priors}. Of particular note is $\rho$, where we enforce a normal prior constrained from the probability density found from asteroseismology. We enforce a $1/e$ prior because without this our parameterization in terms of $e\sin{\omega}$ and $e\cos{\omega}$ would bias $e$ high \citep{eastman13}. We use a normal prior on limb darkening with the expectation obtained through interpolation of model limb darkening in the \emph{Kepler} bandpass with $T_{eff}$, $\log{g}$ and [Fe/H] fixed at the values shown in Table~\ref{tab:priors}, and with a standard deviation of 0.1. Finally, we set a number of prior constraints on linear combinations of $\gamma_1$ and $\gamma_2$ that prevent them from taking unphysical values \citep{burke08}.
+
+\begin{table}
+\centering
+\caption{Model parameters}\label{tab:priors}
+\begin{tabular}{l l }
+Property & Prior \\
+\hline
+$\rho$ (g/cc)		&	$\mathcal{N}(0.0073;0.0001)$ \\
+$zp$				& 	$\mathcal{U}($-$0.0002;0.0002)$\\
+$\gamma_1$		&	$\mathcal{N}(0.67;0.6)$ \\
+$\gamma_2$		&	$\mathcal{N}(0.09;0.6)$\\
+$T_0$ (BKJD)& $\mathcal{U}(136.3;136.5)$\\
+$P$ (days) & $\mathcal{U}(6.2;6.3)$\\
+$b$ & $\mathcal{U}(0;1+R_{p}/R_{\star})$\\
+$R_{p}/R_{\star}$ & $\mathcal{U}(0;1)$ \\
+$e\cos{\omega}$ &$\mathcal{U}(-1;1)$ \\
+$e\cos{\omega}$ & $\mathcal{U}(-1;1)$\\
+$e$ & $1/e$\\
+$A_e$ (ppm)&$\mathcal{U}(-500;500)$ \\
+$A_r$ (ppm)& $\mathcal{U}(-500;500)$\\
+$F_e$ (ppm)& $\mathcal{U}(-500;500)$\\
+$V$ (m/s)&$\mathcal{U}(-300;300)$ \\
+$K$ (m/s)&$\mathcal{U}(-1000;1000)$ \\
+$\log \sigma_{lc}$ & $\mathcal{U}(-50;0.0)$\\
+$\log \sigma_{rv}$ (m/s)&$\mathcal{U}(-15;6)$ \\
+$A_{GP}$ &  $\mathcal{U}(0;0.001$ \\
+$\tau_{GP}$ &  $\mathcal{U}(0;0.5)$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Markov-Chain Monte Carlo modeling}
+We numerically integrated the posterior probability using an efficient affine invariant Markov-Chain Monte Carlo (MCMC) algorithm \citep{goodman10,foreman13}.  This method utilizes many walkers to reduce autocorrelation time; we opted to use 700 walkers each taking 15,000 steps for a total of $10.5\times10^6$ samples of the posterior probability. However, we discard the first 5,000 samples in each walker as burn-in which leaves $7\times10^6$ samples used to calculate posterior distributions.
+
+In Figure~\ref{fig:filter} we show ten transits seen in the \emph{Kepler} data, the mean noise model, the light curve model and the 1-$\sigma$ uncertainty on the combined light curve and noise model. The combination of our noise model and transit model does a good job of matching the correlated noise and planet signals seen in the data.
+
+\begin{figure}
+\includegraphics[width=0.50\textwidth]{several_transits_shaded.pdf}
+%\caption{A small section of the observed Kepler data shown to demonstrate our noise model. The observed data is shown as black points, the noise model in blue, the light curve model in red and the combined light curve and noise model in purple. Two transits are shown in plot. }
+\caption{Ten transits are shown to demonstrate our noise model. The observed data is shown as black points, the mean noise model in blue and the mean light curve model in red. The combined light curve and noise model is shown as the shaded purple region where the shaded region shows the 1-$\sigma$  bounds of the model. The shaded region does not include the white noise component but does include the uncertainty in both the noise model and the transit model. For each transit we show 2.4 days of data, while the y-scale is 0.29\%.}
+\label{fig:filter}
+\end{figure}
+
+
+\section{Results}
+We were able to produce a self consistent model that described the data well. Parameters from the modeling are reported in Table~\ref{tab:results}, we give the median and central 68\% bounds of the marginalized posterior distribution for each parameter. We also list the sample that -- in our chains -- obtained the highest probability. This so-called ``best fit'' is \emph{not} the result of an optimization but it does have a self-consistent set of parameters and if you need a single model, this is the one to use. However, if one needs to draw conclusions about the physical properties of the planet then we advise using the median with reported uncertainty.
+
+In Figure~\ref{fig:results} we show, in the upper left panel the observed data in black (this data still contains correlated noise) with the best-fit model in red and binned observed data in blue. The data have been folded on the orbital period of the planet. The lower left shows the RV data folded on the orbital period of the planet with the same phase as the top right panel. The upper right panel shows the data with a mean Gaussian Process noise model subtracted. Subtracting the mean model gives an idea of what the Gaussian Process is modeling and what noise level remains in the data. We stress that the mean noise model subtracted data should never be used for inference and is for demonstration purposes only. The lower right panel is the same as the upper right panel but zoomed in to better show the ellipsoidal variations and the secondary eclipse.
+
+\begin{figure*}
+\includegraphics[width=0.97\textwidth]{transitplot_4p.pdf}
+\caption{Observed data is shown in black, the best fitting model in red and binned data is shown in blue. The data have been folded on the orbital period of the planet. Panel (a) shows the observed data as black semi-transparent points, the large scatter is due to correlated noise in the observed data which has not been modeled in this plot. The blue points shown are binned observed data with 1000 observed points included per bin. The red curve is the best fitting light curve model, excluding the noise model. Panel (b) shows our observed radial velocity data in black and the best fitting model in red folded on the same phase as the Kepler data. Panel (c) is the same as panel (a) but the mean Gaussian Process noise model has been subtracted from the observed data. The scatter on the data is the white noise component of the noise plus any remaining correlated noise we have not modeled. Panel (d) is a zoom in on panel (c) to show the phase variations from Kepler-91b and the secondary eclipse.}
+\label{fig:results}
+\end{figure*}
+
+
+Our parameter estimates are largely consistent with \citet{lillo14}. While we obtain a slightly lower estimate for $R_{p}/R_{\star}$, we are still consistent with \citet{lillo14} at the level of $<$1.5$\sigma$. Our estimate of $R_{p}/R_{\star}$ is inconsistent with that found by \citet{sliski14}, as shown in Figure~\ref{fig:rprs}. The probability that our $R_{p}/R_{\star}$ estimate agrees with the value found by \citet{sliski14} is 1\%.
+
+ \begin{figure}
+\includegraphics[width=0.50\textwidth]{rprs.pdf}
+\caption{Our marginal distribution on the model parameters $R_{p}/R_{\star}$ compared with \citet{sliski14}. Our estimate has a much larger uncertainty. The estimate from this paper differs with the estimate of \citet{sliski14} by about 2.5 standard deviations.}
+\label{fig:rprs}
+\end{figure}
+
+
+We derive a planet mass of $0.73\pm 0.13$ M$_{Jup}$ which, combined with a planet radius of $1.308^{+0.061}_{-0.074}$ $R_{Jup}$ yields a density of $0.40^{+0.10}_{-0.09}$ g cm$^{3}$ implying that Kepler-91b is somewhat inflated \citep{baraffe10}. The consistency between the planet mass we obtain with radial velocity observations and the mass \citet{lillo14} obtain from the phase curve alone is remarkably good (\citeauthor{lillo14} determined a mass for Kepler-91b of $0.88^{+0.17}_{-0.33}$ M$_{Jup}$). Kepler-91b is one of a growing number of examples demonstrating that hot Jupiter densities can be estimated from \emph{Kepler} data alone \citep[e.g.][]{barclay12,quintana13,esteves13}.
+
+\citet{lillo14} suggest that Kepler-91b may be on an eccentric orbit. In Figure~\ref{fig:ecc} we show our posterior distribution for eccentricity derived from our $e\sin{\omega}$ and $e\cos{\omega}$ samples. While the data prefers an eccentric model, a circular orbit cannot be ruled out.
+
+We note that, as mentioned in Section~2, signals on timescales of more than a few days are damped by a few percent owing to the detrending performed within the Kepler pipeline. The only low frequency signal that we significantly detected in these data was from stellar ellipsoidal variations. With an uncertainty of 10\% on the amplitude of the ellipsoidal signal, a 5\% damping of the signal would not significantly change our results. It should be kept in mind that signals with longer timescales (more than 15--20 days) are significantly damped by the detrending method used within the Kepler pipeline.
+
+The additional uncertainty we report on the radial velocity observations, $\sigma_{rv}$, accounts for astrophysical noise sources that we do not include in our model. One of the sources of astrophysical noise that $\sigma_{rv}$ accounts for is the radial velocity \emph{jitter} induced by the stellar oscillations. The oscillation signal expected is a few meters per second \citep{kjeldsen95} and given its short timescale relative to the planetary orbital period  acts as an additional noise source on the data. However, photon noise is the still dominant source of uncertainty.
+
+
+\begin{figure}
+\includegraphics[width=0.50\textwidth]{ecc_hist.pdf}
+\caption{The posterior distribution for orbital eccentricity for Kepler-91b. While a slightly eccentric orbit is preferred by the data, we cannot rule out a circular orbit model.}
+\label{fig:ecc}
+\end{figure}
+
+
+
+
+\begin{table}
+\caption{Summary of posterior probabilities from the MCMC modeling. Parameters below the line break are derived from the parameters sampled by the model}\label{tab:results}
+\begin{tabular}{l l l l l}
+Parameter&Best fit& Median&84.1\%&15.9\%\\
+\hline
+%$\rho$ (g/cc)		&0.00730	& 0.00730&{+0.00010}&$-$0.00010\\
+%$zp$			&-0.000057	& $-$0.000053&{+0.0000053}&$-$0.0000057\\
+%$\gamma_1$	&0.18	& 0.50&{+0.48}&$-$0.35\\
+%$\gamma_2$	&0.56	& 0.19&{+0.37}&$-$0.49\\
+%$T_0$ (BJD-2454833)		&	136.3846& 136.3824&{+0.0043}&$-$0.0042 \\
+%$P$ 	(days)		&6.246733& 6.246716&{+0.000034}&$-$0.000034\\
+%$b$ 			&	0.856& 0.863&{+0.011}&$-$0.015\\
+%$R_{p}/R_{\star}$& 	0.0211& 0.0213&{+0.0011}&$-$0.0008 \\
+%$e\cos{\omega}$ &	0.0271& 0.0235&{+0.0086}&$-$0.0086\\
+%$e\sin{\omega}$ &	$-$0.015& 0.018&{+0.054}&$-$0.030\\
+%$A_e$ (ppm)		&	50.1& 51.4&{+4.8}&$-$4.9\\
+%$A_r$ (ppm)		&	15& 18&{+11}&$-$10\\
+%$F_e$ (ppm)		&	27& 36&{+13}&$-$13\\
+%$V$ 	(m/s)		&	17.2& 16.5&{+8.2}&$-$8.0\\
+%$K$ 	(m/s)		&72	& 67&{+10}&$-$10 \\
+%$\sigma_{lc}$ (ppm)	&0.6	& 1.3&{+1.4}&$-$0.9  \\
+%$\sigma_{rv}$ (m/s)	&	8.9& 9.0&{+8.2}&$-$6.2\\
+%$A_{GP}$ (ppm)&300& 301 & {+20}&$-$20 \\
+%$l_{GP}$  (days$^{2}$)&0.03729& 0.03711&{+0.00031}&$-$0.00030 \\
+%
+$\rho$ (g/cc)			&	0.00724		&	0.00730		&	+0.00010		&	$-$0.00010	\\
+$zp$	(ppm)			&	$-$56.8		&	$-$60.0		&	+8.0			&	$-$4.7		\\
+$\gamma_1$			&	0.43			&	0.63			&	+0.39		&	$-$0.43		\\
+$\gamma_2$			&	0.27			&	0.12			&	+0.46		&	$-$0.48		\\
+$T_0$ (BKJD\footnote{BKJD is the time system used by \emph{Kepler} and is defined by Barycentric Julian Date (BJD) $-$ 2454833}) 	&	136.3837		&	136.3846		&	+0.0042		&	$-$0.00427	\\
+$P$ 	(days)			&	6.246696		&	6.246713		&	+0.000040	&	$-$0.000032	\\
+$b$ 					&	0.865		&	0.858		&	+0.014		&	$-$0.016		\\
+$R_{p}/R_{\star}$		&	0.0212		&	0.0211		&	+0.0014		&	$-$0.0008		\\
+$e\cos{\omega}$ 		&	0.0134		&	0.0218		&	+0.0080		&	$-$0.00860	\\
+$e\sin{\omega}$ 		&	-0.012		&	-0.016		&	+0.022		&	$-$0.028		\\
+$A_e$ (ppm)			&	50.8			&	52.3			&	+5.0			&	$-$4.9		\\
+$A_r$ (ppm)			&	27			&	32			&	+10			&	$-$19		\\
+$F_e$ (ppm)			&	45			&	40			&	+19			&	$-$18		\\
+$V$ 	(m/s)				&	15.6			&	15.9			&	+6.1			&	$-$6.3		\\
+$K$ 	(m/s)				&	70.2			&	67.1			&	+9.4			&	$-$8.3		\\
+$\log \sigma_{lc}$ (ppm)	&	-15.3			&	-15.9			&	+2.0			&	$-$1.7		\\
+$\log \sigma_{rv}$ (m/s)	&	3.0			&	2.3			&	+1.9			&	$-$1.7		\\
+$A_{GP}$ (ppm)		&	301.6		&	301.2		&	+1.8			&	$-$1.9		\\
+$\tau_{GP}$  (days)		&	0.03717		&	0.03712		&	+0.00027		&	$-$0.00031	\\
+%
+%['0.00730466862869 +8.52085129353e-05 -9.26232426027e-05',
+% '-5.30093114017e-05 +5.01971045669e-06 -4.66419960178e-06',
+% '0.620452730621 +0.466467007951 -0.434953979133',
+% '0.0621967704586 +0.455878835588 -0.483588724475',
+% '15.902473078 +6.16341595451 -6.34228884901',
+% '0.000301240462656 +1.82234282448e-06 -1.87414774156e-06',
+% '0.0371230962866 +0.000271376439512 -0.000307551514108',
+% '136.385623635 +0.0042339596508 -0.00468291338805',
+% '6.24671250796 +3.95712819738e-05 -3.17957457971e-05',
+% '0.858698158808 +0.013717684315 -0.0160191106758',
+% '0.021755598552 +0.00143232382551 -0.000849405244577',
+% '0.0218164937844 +0.00803895495254 -0.00800432355801',
+% '-0.0161336815756 +0.0216338155473 -0.0287877108462',
+% '66.1948270098 +9.43433143691 -8.28955654018',
+% '35.008244705 +12.0011312801 -12.0513135652',
+% '50.7225181485 +4.96664569186 -4.86973321549',
+% '18.0252368398 +9.82802585844 -10.0342755033',
+% '1.19134583079e-07 +8.220512096e-07 -9.66832088545e-08',
+% '1.11911143471 +6.08439159466 -0.91366958491']
+%
+%
+\hline
+%$R_{p}$ ($R_{Jup}$) & 1.294 & 1.328 & +0.076 & $-$0.062 \\
+%$M_{p}$ ($M_{Jup}$) & 0.78 & 0.72 & +0.12 & $-$0.11 \\
+%$a/R_{\star}$ &2.469 & 2.469 & +0.011 & $-$0.011 \\
+%$A_g$ & 0.37 & 0.46 & +0.18 & $-$0.17 \\
+%$e$ & 0.0311 & 0.032 & +0.021 & $-$0.013 \\
+%$i$ (deg)& 70.02 &  69.95 & +0.39 & $-$0.38 \\
+%$\rho_{p}$ (g/cc) & 0.478 & 0.405 & +0.092 & $-$0.084\\
+%
+$R_{p}$ ($R_{Jup}$) 	&	1.300		&	1.308		&	+0.061		&	$-$0.074		\\
+$M_{p}$ ($M_{Jup}$)	&	0.76			&	0.73			&	+0.13		&	$-$0.13		\\
+$a/R_{\star}$			&	2.463		&	2.469		&	+0.011		&	$-$0.011		\\
+$A_g$				&	0.66			&	0.52			&	+0.22		&	$-$0.20		\\
+$e$					&	0.018		&	0.040		&	+0.040		&	$-$0.016		\\
+$i$ (deg)				&	69.17		&	69.12		&	+0.58		&	$-$0.88		\\
+$\rho_{p}$ (g/cc) 		&	0.43			&	0.40			&	+0.10		&	$-$0.09		\\
+\hline
+\end{tabular}
+\end{table}
+
+
+\section{Discussion}
+We obtained good fits to both the radial velocity and light curve data with our model as shown in Figure~\ref{fig:results}. Our Gaussian process model is intended to describe the surface granulation on the red giant. In Figure~\ref{fig:PSD} we show the power spectral density of the original light curve in grey and in purple we show the power spectral density for the light curve with the mean noise model and best fitting transit model subtracted out. We can clearly see that the low frequency noise is well fit by the model. We note that the red giant oscillations are not removed by this model and can be seen as a Lorentzian peak around 100 $\mu$Hz. In Figure~\ref{fig:hist_resid} we show the histogram of our flux values from the light curve (with median of zero) and the residuals of flux time series with the mean nose model and transiting planet model subtracted. It is clear here that the residuals with the noise model removed are significantly smaller than in the standard deviation of original time series.
+
+
+ \begin{figure}
+\includegraphics[width=0.50\textwidth]{PSD.pdf}
+\caption{The power spectral density of the light curve of Kepler-91 is shown in grey while the same light curve with our mean noise model and best fitting transiting planet model subtracted off is shown in purple. The low frequency power is reduced by an order of magnitude by using our noise model. The peak around 100 $\mu$Hz is owing to the red giant oscillations which we make no attempt to remove.}
+\label{fig:PSD}
+\end{figure}
+
+ \begin{figure}
+\includegraphics[width=0.50\textwidth]{hist_vals_resid.pdf}
+\caption{Histograms of the values of the light time series of Kepler-91. In grey is the flux time series as extracted from the observed data. In purple are the residuals of the flux time series with a mean noise model removed. The residuals have a much lower scatter than the original data. The standard deviation of the original data is 398 ppm while the standard deviation of the residuals is 166 ppm.}
+\label{fig:hist_resid}
+\end{figure}
+
+
+The radial velocity observations phase well with the orbital period defined by the transit and therefore almost certainly are caused by a reflex motion of the star that the planet orbits. The transit model fits the data well with low eccentricity. If the density constraint from asteroseismology was found to be a poor choice of prior we would need a model with high eccentricity, which is not seen. The mass we derive is consistent with a planetary body. We therefore conclude Kepler-91b is a \emph{bona fide} planet.
+
+The validation presented in this work raises questions as to why Kepler-91 was previously suspected to be a false-positive. \citet{esteves13} concluded that Kepler-91b is a false positive based on a phase curve fit where they find a night-side temperature inconsistent with a body that is not self luminous. We do not draw the same conclusions. Using the same equation as \citeauthor{esteves13} for geometric albedo, we derived a value of $0.52^{+0.22}_{-0.20}$ compared with $2.49^{+0.55}_{-0.60}$ from \citeauthor{esteves13}. 
+
+When modeling the correlated noise we find a transit depth that is inconsistent with the transit depth found by both \citet{esteves13} and \citet{sliski14} who both report shallower transits. The method we use to calculate the geometric albedo is
+\begin{equation}
+A_g = F_e \left(\frac{a}{R_p}\right)^{2} = F_e \left(\frac{a}{R_{\star}}\frac{R_{\star}}{R_{p}}\right)^{2} .
+\end{equation}
+Therefore, underestimating $R_{p}/R_{\star}$ will overestimate the albedo $A_g$ and lead to a conclusion that the occulting body is self-luminous.
+
+
+\citet{sliski14} find that the mean stellar density derived purely from a transit model is not consistent with the asteroseismic density of the star. In Figure~\ref{fig:rho} we show our estimate of the stellar density and the estimate of \citet{sliski14}, the two estimates differ very significantly. They hypothesize that the observed transit is not caused by a body occulting the target star which is inconsistent with our results.
+
+ \begin{figure}
+\includegraphics[width=0.50\textwidth]{rho.pdf}
+\caption{Our marginal distribution on the model parameters $\rho$ compared with \citet{sliski14}. The two estimates differ very significantly. The value from asteroseismology, which we use as a prior, is shown in red.}
+\label{fig:rho}
+\end{figure}
+
+We have hypothesized that the different conclusions regarding the planetary nature of Kepler-91b are owing to correlated noise in the Kepler data. With this in mind, we performed an additional MCMC simulation but this time did not include our Gaussian Process noise model and removed the asteroseismic prior on the stellar density. We found that without the Gaussian Process model our posteriors mirrored the results found by \citet{sliski14} with $\rho$~=~$0.043^{+0.001}_{-0.003}$ g cm$^{-3}$ and $R_p/R_\star$~=~$0.01955\pm 0.0002$, in tension to our original parameters when using the noise model (a comparison is shown in Figure~\ref{fig:comp_noGP}). This test shows that it is the Gaussian Process noise model that cause the differing results from \citet{sliski14}. 
+
+ \begin{figure}
+\includegraphics[width=0.50\textwidth]{comp_noGP.pdf}
+\caption{The two panels show a comparison of our posterior model parameters when using the Gaussian Process noise model and a prior on the stellar density from the asteroseismic constraint with the posterior when assuming no time correlated noise. The upper panel shows the mean stellar density, $\rho$ while the lower panel shows the planet-to-star radius ratio $R_p/R_\star$. Our posteriors when not including the correlated noise mirrors the results of \citet{sliski14} but when we include the noise model our results are consistent with the conclusion we must draw from the radial velocity data that Kepler-91b is a planet.}
+\label{fig:comp_noGP}
+\end{figure}
+
+We believe it is reasonable to draw the conclusion that not including correlated noise in the model for this star is what led to the erroneous results of the aforementioned teams. However, it is important to note that it is only because we were in possession of the radial velocity data, which raised doubts on the interpretation of \citeauthor{esteves13} and \citeauthor{sliski14}, that we considered the more sophisticated noise model described here.
+
+
+
+
+
+%We begin by considering the work of \citet{esteves13} who conclude that Kepler-91b is false positive based on a phase curve fit where they find a night-side temperature inconsistent with a body that is not self luminous. We do not draw the same conclusions. Using the same equation as \citeauthor{esteves13} for geometric albedo, we derived a value of $0.52^{+0.22}_{-0.20}$ compared with $2.49^{+0.55}_{-0.60}$ from \citeauthor{esteves13}. 
+
+
+
+%\citet{sliski14} find that the mean stellar density derived purely from a transit model is not consistent with the asteroseismic density of the star. However, \citet{sliski14} only include data less than three transit durations from a transit and fit a standard transit model without the out-of-transit ellipsoidal variations. 
+
+
+%The validation presented in this work raises questions as to why Kepler-91 was previously suspected to be false-positive. Our suspicion was that not accounting for correlated noise is the Kepler data caused 
+
+%We hypothesize that the disparate parameter estimates arise from using different detrending techniques. Specifically we point to their use of a median filter which could result in the significantly smaller transit depth than we measure \citep{alapini09}. The method we use to calculate the geometric albedo (and we presume \citeauthor{esteves13} use also) is
+%\begin{equation}
+%A_g = F_e \left(\frac{a}{R_p}\right)^{2} = F_e \left(\frac{a}{R_{\star}}\frac{R_{\star}}{R_{p}}\right)^{2} .
+%\end{equation}
+%Therefore, underestimating $R_{p}/R_{\star}$ will overestimate the albedo $A_g$. We caution that it is only because we were in possession of the radial velocity data, which raised doubts on the interpretation of \citeauthor{esteves13}, that we considered the more sophisticated noise model described here. We suggest that extreme care should be taken in deriving planet parameters where the host star shows intrinsic correlated noise on timescales comparable to the transit duration.
+
+%\citet{sliski14} only include data less than three transit durations from a transit and fit a standard transit model without the out-of-transit ellipsoidal variations. They find that the mean stellar density derived purely from a transit model is not consistent with the asteroseismic density of the star. We suspect that \citeauthor{sliski14} find a higher stellar density because they neglected to include phase variations, particularly the high amplitude ellipsoidal variations found by \citet{lillo14}. The density parameter is sensitive to the duration of the transit, we hypothesize that not including out-of-transit variations caused an underestimate of the transit duration. This theory is strengthened because they report a significantly smaller planet-to-star radius ratio than we find. We caution against using just a short amount of data on either side of the transit as correctly estimating the out-of-transit flux level is essential to estimating the planet properties.
+
+
+
+
+
+\section{Conclusions}
+We combined \emph{Kepler} data presented in previous studies of Kepler-91 with radial velocity data obtained from the Hobby-Eberly Telescope. We find that these data can be fit in a self consistent manner and the results lead us to conclude that Kepler-91b is a planet, validating the work of \citet{lillo14}. We hypothesize that recent work claiming this as a false positive erred owing to the challenge of modeling a star with a strong correlated noise component and relatively high amplitude out-of-transit variations. We use a Gaussian Process to model the correlated noise present in the light curve of this red giant star and we derive parameters that are in agreement with the planetary nature of Kepler-91b. We suggest that Gaussian Processes may prove to be very useful in future studies of transiting exoplanets orbiting stars exhibiting correlated noise properties.
+
+The validation of Kepler-91 presented in this work confirms that hot Jupiters exist in close-in orbits around red giant stars. Future studies of Kepler-91 and similar planets will allow insights on the internal composition of hot Jupiters as a function of host star evolution \citep{spiegel12}, and measurements of the spin-orbit inclination of such systems may allow us to test theories of obliquity damping that have been proposed for hot Jupiter populations around less evolved stars \citep{winn10}.
+
+
+%All of the code used in this project is available from
+%{https://github.com/mrtommyb/GP\_model\_Kepler\_data} under the MIT
+%open-source software license.
+%This code (plus some dependencies) can be run to re-generate all of the
+%figures and results in this paper; this version of the paper was generated
+%with git commit \texttt{\githash} (\gitdate).
+
+
+\emph{We note that after the submission of our paper, independent radial velocity observations confirming the planetary nature of Kepler-91b were published by \citet{lillo14b}.}
+
+\acknowledgments
+This paper includes data collected by the \emph{Kepler} mission. Funding for the \emph{Kepler} mission is provided by the NASA Science Mission Directorate. We would like to express our gratitude to all those who have worked on the \emph{Kepler} pipeline over the many years of the \emph{Kepler} mission. Some \emph{Kepler} data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST) at the Space Telescope Science Institute (STScI). STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-26555. Support for MAST for non-HST data is provided by the NASA Office of Space Science via grant NNX09AF08G and by other grants and contracts. Our MCMC sampling was performed on the Pleiades supercomputer of the NASA Advanced Supercomputing Division at NASA's Ames Research Center. We used data obtained from The Hobby-Eberly Telescope (HET), a joint project of the University of Texas at Austin, the Pennsylvania State University, Stanford University, Ludwig-Maximilians-Universit\"{a}t M\"{u}nchen, and Georg-August-Universit\"{a}t G\"{o}ttingen. The HET is named in honor of its principal benefactors, William P. Hobby and Robert E. Eberly. We thank the Statistical and Applied Mathematical Sciences Institute (SAMSI) for hosting the Modern Statistical and Computational Methods for Analysis of Kepler Data workshop where the idea for this work came about. The work performed at SAMSI was partially supported by the National Science Foundation under Grant DMS-1127914 to the Statistical and Applied Mathematical Sciences Institute. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation. We thank Ruth Angus (Univ. of Oxford) for valuable discussions on noise sources in RV observations. We thank Jeffrey C. Smith, Joe Catanzarite (both SETI Inst.) and David Kipping (Harvard/CfA) for suggestions on how to improve the manuscript. E.V. Quintana is supported by a NASA Senior Fellowship at the Ames Research Center, administered by Oak Ridge Associated Universities through a contract with NASA. D. Huber acknowledges support by NASA under Grant NNX14AB92G issued through the Kepler Participating Scientist Program.
+
+%\appendix
+%\section{MCMC plots}
+
+%\bibliography{biblio}
+
+%\bibliographystyle{apj}
+
+\begin{thebibliography}{45}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{{Ambikasaran} {et~al.}(2014){Ambikasaran}, {Foreman-Mackey},
+  {Greengard}, {Hogg}, \& {O'Neil}}]{ambikasaran14}
+{Ambikasaran}, S., {Foreman-Mackey}, D., {Greengard}, L., {Hogg}, D.~W., \&
+  {O'Neil}, M. 2014, e-print (arXiv:1403.6015)
+
+\bibitem[{{Baraffe} {et~al.}(2010){Baraffe}, {Chabrier}, \&
+  {Barman}}]{baraffe10}
+{Baraffe}, I., {Chabrier}, G., \& {Barman}, T. 2010, Reports on Progress in
+  Physics, 73, 016901
+
+\bibitem[{{Barclay} {et~al.}(2012){Barclay}, {Huber}, {Rowe}, {Fortney},
+  {Morley}, {Quintana}, {Fabrycky}, {Barentsen}, {Bloemen}, {Christiansen},
+  {Demory}, {Fulton}, {Jenkins}, {Mullally}, {Ragozzine}, {Seader}, {Shporer},
+  {Tenenbaum}, \& {Thompson}}]{barclay12}
+{Barclay}, T., {Huber}, D., {Rowe}, J.~F., {et~al.} 2012, \apj, 761, 53
+
+\bibitem[{{Barclay} {et~al.}(2013){Barclay}, {Rowe}, {Lissauer}, {Huber},
+  {Fressin}, {Howell}, {Bryson}, {Chaplin}, {D{\'e}sert}, {Lopez}, {Marcy},
+  {Mullally}, {Ragozzine}, {Torres}, {Adams}, {Agol}, {Barrado}, {Basu},
+  {Bedding}, {Buchhave}, {Charbonneau}, {Christiansen},
+  {Christensen-Dalsgaard}, {Ciardi}, {Cochran}, {Dupree}, {Elsworth},
+  {Everett}, {Fischer}, {Ford}, {Fortney}, {Geary}, {Haas}, {Handberg},
+  {Hekker}, {Henze}, {Horch}, {Howard}, {Hunter}, {Isaacson}, {Jenkins},
+  {Karoff}, {Kawaler}, {Kjeldsen}, {Klaus}, {Latham}, {Li}, {Lillo-Box},
+  {Lund}, {Lundkvist}, {Metcalfe}, {Miglio}, {Morris}, {Quintana}, {Stello},
+  {Smith}, {Still}, \& {Thompson}}]{barclay13}
+{Barclay}, T., {Rowe}, J.~F., {Lissauer}, J.~J., {et~al.} 2013, \nat, 494, 452
+
+\bibitem[{{Batalha} {et~al.}(2013){Batalha}, {Rowe}, {Bryson}, {Barclay},
+  {Burke}, {Caldwell}, {Christiansen}, {Mullally}, {Thompson}, {Brown},
+  {Dupree}, {Fabrycky}, {Ford}, {Fortney}, {Gilliland}, {Isaacson}, {Latham},
+  {Marcy}, {Quinn}, {Ragozzine}, {Shporer}, {Borucki}, {Ciardi}, {Gautier},
+  {Haas}, {Jenkins}, {Koch}, {Lissauer}, {Rapin}, {Basri}, {Boss}, {Buchhave},
+  {Carter}, {Charbonneau}, {Christensen-Dalsgaard}, {Clarke}, {Cochran},
+  {Demory}, {Desert}, {Devore}, {Doyle}, {Esquerdo}, {Everett}, {Fressin},
+  {Geary}, {Girouard}, {Gould}, {Hall}, {Holman}, {Howard}, {Howell},
+  {Ibrahim}, {Kinemuchi}, {Kjeldsen}, {Klaus}, {Li}, {Lucas}, {Meibom},
+  {Morris}, {Pr{\v s}a}, {Quintana}, {Sanderfer}, {Sasselov}, {Seader},
+  {Smith}, {Steffen}, {Still}, {Stumpe}, {Tarter}, {Tenenbaum}, {Torres},
+  {Twicken}, {Uddin}, {Van Cleve}, {Walkowicz}, \& {Welsh}}]{batalha12}
+{Batalha}, N.~M., {Rowe}, J.~F., {Bryson}, S.~T., {et~al.} 2013, \apjs, 204, 24
+
+\bibitem[{{Bloemen} {et~al.}(2011){Bloemen}, {Marsh}, {{\O}stensen},
+  {Charpinet}, {Fontaine}, {Degroote}, {Heber}, {Kawaler}, {Aerts}, {Green},
+  {Telting}, {Brassard}, {G{\"a}nsicke}, {Handler}, {Kurtz}, {Silvotti}, {Van
+  Grootel}, {Lindberg}, {Pursimo}, {Wilson}, {Gilliland}, {Kjeldsen},
+  {Christensen-Dalsgaard}, {Borucki}, {Koch}, {Jenkins}, \&
+  {Klaus}}]{bloemen11}
+{Bloemen}, S., {Marsh}, T.~R., {{\O}stensen}, R.~H., {et~al.} 2011, \mnras,
+  410, 1787
+
+\bibitem[{{Brown} {et~al.}(2011){Brown}, {Latham}, {Everett}, \&
+  {Esquerdo}}]{brown11}
+{Brown}, T.~M., {Latham}, D.~W., {Everett}, M.~E., \& {Esquerdo}, G.~A. 2011,
+  \aj, 142, 112
+
+\bibitem[{{Burke} {et~al.}(2008){Burke}, {McCullough}, {Valenti}, {Long},
+  {Johns-Krull}, {Machalek}, {Janes}, {Taylor}, {Fleenor}, {Foote}, {Gary},
+  {Garc{\'{\i}}a-Melendo}, {Gregorio}, \& {Vanmunster}}]{burke08}
+{Burke}, C.~J., {McCullough}, P.~R., {Valenti}, J.~A., {et~al.} 2008, \apj,
+  686, 1331
+
+\bibitem[{{Campbell} {et~al.}(1988){Campbell}, {Walker}, \&
+  {Yang}}]{campbell88}
+{Campbell}, B., {Walker}, G.~A.~H., \& {Yang}, S. 1988, \apj, 331, 902
+
+\bibitem[{{Carter} \& {Winn}(2009)}]{carter09}
+{Carter}, J.~A., \& {Winn}, J.~N. 2009, \apj, 704, 51
+
+\bibitem[{{Carter} {et~al.}(2012){Carter}, {Agol}, {Chaplin}, {Basu},
+  {Bedding}, {Buchhave}, {Christensen-Dalsgaard}, {Deck}, {Elsworth},
+  {Fabrycky}, {Ford}, {Fortney}, {Hale}, {Handberg}, {Hekker}, {Holman},
+  {Huber}, {Karoff}, {Kawaler}, {Kjeldsen}, {Lissauer}, {Lopez}, {Lund},
+  {Lundkvist}, {Metcalfe}, {Miglio}, {Rogers}, {Stello}, {Borucki}, {Bryson},
+  {Christiansen}, {Cochran}, {Geary}, {Gilliland}, {Haas}, {Hall}, {Howard},
+  {Jenkins}, {Klaus}, {Koch}, {Latham}, {MacQueen}, {Sasselov}, {Steffen},
+  {Twicken}, \& {Winn}}]{carter12}
+{Carter}, J.~A., {Agol}, E., {Chaplin}, W.~J., {et~al.} 2012, Science, 337, 556
+
+\bibitem[{{Demory} {et~al.}(2013){Demory}, {de Wit}, {Lewis}, {Fortney},
+  {Zsom}, {Seager}, {Knutson}, {Heng}, {Madhusudhan}, {Gillon}, {Barclay},
+  {Desert}, {Parmentier}, \& {Cowan}}]{demory13}
+{Demory}, B.-O., {de Wit}, J., {Lewis}, N., {et~al.} 2013, \apjl, 776, L25
+
+\bibitem[{{Eastman} {et~al.}(2013){Eastman}, {Gaudi}, \& {Agol}}]{eastman13}
+{Eastman}, J., {Gaudi}, B.~S., \& {Agol}, E. 2013, \pasp, 125, 83
+
+\bibitem[{{Endl} {et~al.}(2011){Endl}, {MacQueen}, {Cochran}, {Brugamyer},
+  {Buchhave}, {Rowe}, {Lucas}, {Isaacson}, {Bryson}, {Howell}, {Fortney},
+  {Hansen}, {Borucki}, {Caldwell}, {Christiansen}, {Ciardi}, {Demory},
+  {Everett}, {Ford}, {Haas}, {Holman}, {Horch}, {Jenkins}, {Koch}, {Lissauer},
+  {Machalek}, {Still}, {Welsh}, {Sanderfer}, {Seader}, {Smith}, {Thompson}, \&
+  {Twicken}}]{endl11}
+{Endl}, M., {MacQueen}, P.~J., {Cochran}, W.~D., {et~al.} 2011, \apjs, 197, 13
+
+\bibitem[{{Esteves} {et~al.}(2013){Esteves}, {De Mooij}, \&
+  {Jayawardhana}}]{esteves13}
+{Esteves}, L.~J., {De Mooij}, E.~J.~W., \& {Jayawardhana}, R. 2013, \apj, 772,
+  51
+
+\bibitem[{{Evans} {et~al.}(2013){Evans}, {Pont}, {Sing}, {Aigrain}, {Barstow},
+  {D{\'e}sert}, {Gibson}, {Heng}, {Knutson}, \& {Lecavelier des
+  Etangs}}]{evans-gp}
+{Evans}, T.~M., {Pont}, F., {Sing}, D.~K., {et~al.} 2013, \apjl, 772, L16
+
+\bibitem[{{Foreman-Mackey} {et~al.}(2013){Foreman-Mackey}, {Hogg}, {Lang}, \&
+  {Goodman}}]{foreman13}
+{Foreman-Mackey}, D., {Hogg}, D.~W., {Lang}, D., \& {Goodman}, J. 2013, \pasp,
+  125, 306
+
+\bibitem[{{Gibson} {et~al.}(2012){Gibson}, {Aigrain}, {Roberts}, {Evans},
+  {Osborne}, \& {Pont}}]{gibson-gp}
+{Gibson}, N.~P., {Aigrain}, S., {Roberts}, S., {et~al.} 2012, MNRAS, 419, 2683
+
+\bibitem[{{Goodman} \& {Weare}(2010)}]{goodman10}
+{Goodman}, J., \& {Weare}, J. 2010, Comm. App. Math. Comp. Sci., 5, 65
+
+\bibitem[{{Hatzes} {et~al.}(1998){Hatzes}, {Cochran}, \& {Bakker}}]{hatzes98}
+{Hatzes}, A.~P., {Cochran}, W.~D., \& {Bakker}, E.~J. 1998, \apj, 508, 380
+
+\bibitem[{{Huber} {et~al.}(2013){Huber}, {Chaplin}, {Christensen-Dalsgaard},
+  {Gilliland}, {Kjeldsen}, {Buchhave}, {Fischer}, {Lissauer}, {Rowe},
+  {Sanchis-Ojeda}, {Basu}, {Handberg}, {Hekker}, {Howard}, {Isaacson},
+  {Karoff}, {Latham}, {Lund}, {Lundkvist}, {Marcy}, {Miglio}, {Silva Aguirre},
+  {Stello}, {Arentoft}, {Barclay}, {Bedding}, {Burke}, {Christiansen},
+  {Elsworth}, {Haas}, {Kawaler}, {Metcalfe}, {Mullally}, \&
+  {Thompson}}]{huber13}
+{Huber}, D., {Chaplin}, W.~J., {Christensen-Dalsgaard}, J., {et~al.} 2013,
+  \apj, 767, 127
+
+\bibitem[{{Jenkins} {et~al.}(2010){Jenkins}, {Caldwell}, {Chandrasekaran},
+  {Twicken}, {Bryson}, {Quintana}, {Clarke}, {Li}, {Allen}, {Tenenbaum}, {Wu},
+  {Klaus}, {Middour}, {Cote}, {McCauliff}, {Girouard}, {Gunter}, {Wohler},
+  {Sommers}, {Hall}, {Uddin}, {Wu}, {Bhavsar}, {Van Cleve}, {Pletcher},
+  {Dotson}, {Haas}, {Gilliland}, {Koch}, \& {Borucki}}]{jenkins10}
+{Jenkins}, J.~M., {Caldwell}, D.~A., {Chandrasekaran}, H., {et~al.} 2010,
+  \apjl, 713, L87
+
+\bibitem[{{Kipping}(2010)}]{kipping10}
+{Kipping}, D.~M. 2010, \mnras, 408, 1758
+
+\bibitem[{{Kjeldsen} \& {Bedding}(1995)}]{kjeldsen95}
+{Kjeldsen}, H., \& {Bedding}, T.~R. 1995, \aap, 293, 87
+
+\bibitem[{{Lillo-Box} {et~al.}(2014{\natexlab{a}}){Lillo-Box}, {Barrado},
+  {Moya}, {Montesinos}, {Montalb{\'a}n}, {Bayo}, {Barbieri}, {R{\'e}gulo},
+  {Mancini}, {Bouy}, \& {Henning}}]{lillo14}
+{Lillo-Box}, J., {Barrado}, D., {Moya}, A., {et~al.} 2014{\natexlab{a}}, \aap,
+  562, A109
+
+\bibitem[{{Lillo-Box} {et~al.}(2014{\natexlab{b}}){Lillo-Box}, {Barrado},
+  {Henning}, {Mancini}, {Ciceri}, {Figueira}, {Santos}, {Aceituno}, \&
+  {S{\'a}nchez}}]{lillo14b}
+{Lillo-Box}, J., {Barrado}, D., {Henning}, T., {et~al.} 2014{\natexlab{b}},
+  \aap, 568, L1
+
+\bibitem[{{Lin} {et~al.}(1996){Lin}, {Bodenheimer}, \& {Richardson}}]{lin96}
+{Lin}, D.~N.~C., {Bodenheimer}, P., \& {Richardson}, D.~C. 1996, \nat, 380, 606
+
+\bibitem[{{Lissauer} {et~al.}(2011){Lissauer}, {Fabrycky}, {Ford}, {Borucki},
+  {Fressin}, {Marcy}, {Orosz}, {Rowe}, {Torres}, {Welsh}, {Batalha}, {Bryson},
+  {Buchhave}, {Caldwell}, {Carter}, {Charbonneau}, {Christiansen}, {Cochran},
+  {Desert}, {Dunham}, {Fanelli}, {Fortney}, {Gautier}, {Geary}, {Gilliland},
+  {Haas}, {Hall}, {Holman}, {Koch}, {Latham}, {Lopez}, {McCauliff}, {Miller},
+  {Morehead}, {Quintana}, {Ragozzine}, {Sasselov}, {Short}, \&
+  {Steffen}}]{lissauer11}
+{Lissauer}, J.~J., {Fabrycky}, D.~C., {Ford}, E.~B., {et~al.} 2011, \nat, 470,
+  53
+
+\bibitem[{{Mandel} \& {Agol}(2002)}]{mandel02}
+{Mandel}, K., \& {Agol}, E. 2002, \apjl, 580, L171
+
+\bibitem[{{Marcy} \& {Butler}(1996)}]{marcy96}
+{Marcy}, G.~W., \& {Butler}, R.~P. 1996, \apjl, 464, L147
+
+\bibitem[{{Mayor} \& {Queloz}(1995)}]{mayor95}
+{Mayor}, M., \& {Queloz}, D. 1995, \nat, 378, 355
+
+\bibitem[{{Nagasawa} {et~al.}(2008){Nagasawa}, {Ida}, \& {Bessho}}]{nagasawa08}
+{Nagasawa}, M., {Ida}, S., \& {Bessho}, T. 2008, \apj, 678, 498
+
+\bibitem[{{Quintana} {et~al.}(2013){Quintana}, {Rowe}, {Barclay}, {Howell},
+  {Ciardi}, {Demory}, {Caldwell}, {Borucki}, {Christiansen}, {Jenkins},
+  {Klaus}, {Fulton}, {Morris}, {Sanderfer}, {Shporer}, {Smith}, {Still}, \&
+  {Thompson}}]{quintana13}
+{Quintana}, E.~V., {Rowe}, J.~F., {Barclay}, T., {et~al.} 2013, \apj, 767, 137
+
+\bibitem[{Rasmussen \& Williams(2006)}]{rasmussen}
+Rasmussen, C.~E., \& Williams, C. 2006, Gaussian processes for machine learning
+  (MIT Press)
+
+\bibitem[{{Rowe} {et~al.}(2014){Rowe}, {Bryson}, {Marcy}, {Lissauer},
+  {Jontof-Hutter}, {Mullally}, {Gilliland}, {Issacson}, {Ford}, {Howell},
+  {Borucki}, {Haas}, {Huber}, {Steffen}, {Thompson}, {Quintana}, {Barclay},
+  {Still}, {Fortney}, {Gautier}, {Hunter}, {Caldwell}, {Ciardi}, {Devore},
+  {Cochran}, {Jenkins}, {Agol}, {Carter}, \& {Geary}}]{rowe14}
+{Rowe}, J.~F., {Bryson}, S.~T., {Marcy}, G.~W., {et~al.} 2014, \apj, 784, 45
+
+\bibitem[{{Shporer} {et~al.}(2011){Shporer}, {Jenkins}, {Rowe}, {Sanderfer},
+  {Seader}, {Smith}, {Still}, {Thompson}, {Twicken}, \& {Welsh}}]{shporer11}
+{Shporer}, A., {Jenkins}, J.~M., {Rowe}, J.~F., {et~al.} 2011, \aj, 142, 195
+
+\bibitem[{{Sliski} \& {Kipping}(2014)}]{sliski14}
+{Sliski}, D.~H., \& {Kipping}, D.~M. 2014, \apj, 791, 89
+
+\bibitem[{{Smith} {et~al.}(2012){Smith}, {Stumpe}, {Van Cleve}, {Jenkins},
+  {Barclay}, {Fanelli}, {Girouard}, {Kolodziejczak}, {McCauliff}, {Morris}, \&
+  {Twicken}}]{smith12}
+{Smith}, J.~C., {Stumpe}, M.~C., {Van Cleve}, J.~E., {et~al.} 2012, \pasp, 124,
+  1000
+
+\bibitem[{{Spiegel} \& {Madhusudhan}(2012)}]{spiegel12}
+{Spiegel}, D.~S., \& {Madhusudhan}, N. 2012, \apj, 756, 132
+
+\bibitem[{{Stumpe} {et~al.}(2014){Stumpe}, {Smith}, {Catanzarite}, {Van Cleve},
+  {Jenkins}, {Twicken}, \& {Girouard}}]{stumpe14}
+{Stumpe}, M.~C., {Smith}, J.~C., {Catanzarite}, J.~H., {et~al.} 2014, \pasp,
+  126, 100
+
+\bibitem[{{Stumpe} {et~al.}(2012){Stumpe}, {Smith}, {Van Cleve}, {Twicken},
+  {Barclay}, {Fanelli}, {Girouard}, {Jenkins}, {Kolodziejczak}, {McCauliff}, \&
+  {Morris}}]{stumpe12}
+{Stumpe}, M.~C., {Smith}, J.~C., {Van Cleve}, J.~E., {et~al.} 2012, \pasp, 124,
+  985
+
+\bibitem[{{Tenenbaum} {et~al.}(2013){Tenenbaum}, {Jenkins}, {Seader}, {Burke},
+  {Christiansen}, {Rowe}, {Caldwell}, {Clarke}, {Li}, {Quintana}, {Smith},
+  {Thompson}, {Twicken}, {Borucki}, {Batalha}, {Cote}, {Haas}, {Hunter},
+  {Sanderfer}, {Girouard}, {Hall}, {Ibrahim}, {Klaus}, {McCauliff}, {Middour},
+  {Sabale}, {Uddin}, {Wohler}, {Barclay}, \& {Still}}]{tenenbaum13}
+{Tenenbaum}, P., {Jenkins}, J.~M., {Seader}, S., {et~al.} 2013, \apjs, 206, 5
+
+\bibitem[{{Thompson} {et~al.}(2013)}]{DRN21}
+{Thompson}, S.~E., {et~al.} 2013, {Kepler Data Release 21 Notes Q0--Q14
+  (KSCI-19061--001)}
+
+\bibitem[{{Tull}(1998)}]{tull98}
+{Tull}, R.~G. 1998, in Society of Photo-Optical Instrumentation Engineers
+  (SPIE) Conference Series, Vol. 3355, Optical Astronomical Instrumentation,
+  ed. S.~{D'Odorico}, 387--398
+
+\bibitem[{{Winn} {et~al.}(2010){Winn}, {Fabrycky}, {Albrecht}, \&
+  {Johnson}}]{winn10}
+{Winn}, J.~N., {Fabrycky}, D., {Albrecht}, S., \& {Johnson}, J.~A. 2010, \apjl,
+  718, L145
+
+\end{thebibliography}
+
+
+\begin{appendix}
+\section{Additional plots}
+In this section we have included a number of additional plots to allow the reader to better assess the convergence of our MCMC chains. In Figure~\ref{fig:chains} we show a trace of each of the 19 parameters included in our model, while Figure~\ref{fig:chain_hist} shows histograms representing marginalized posteriors of the modeled parameters.
+
+\begin{figure}
+\includegraphics[width=0.97\textwidth]{chains.pdf}
+\caption{The MCMC chains of the 19 individual parameters included in our model. We show here every 10th sample in order to make the plot easier to parse.}
+\label{fig:chains}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=0.97\textwidth]{chain_hist.pdf}
+\caption{Histograms of the marginalized posteriors of the 19 parameters included in our MCMC planet model.}
+\label{fig:chain_hist}
+\end{figure}
+
+
+
+
+
+
+\end{appendix}
+\end{document}
